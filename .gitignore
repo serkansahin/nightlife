@@ -1,0 +1,8 @@
+.DS_Store
+/.env
+src/nightlife/settings.py
+nightlife/__pycache__
+src/nightlife/__pycache__
+src/nightlife/migrations
+src/staticfiles
+src/mediafiles
