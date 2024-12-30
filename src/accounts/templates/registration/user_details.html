@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ user.username }}</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if user.thumbnail %}
+    <div class="row">
+        <img class="img-fluid" src="{{ user.thumbnail.url }}" alt="{{ user.username }}">
+    </div>
+    {% endif %}
+
+    <div class="row text-center">
+        <h1>{{ user.username }}</h1>
+    </div>
+
+    <div class="row">
+        <p>{{ user.town }}</p>
+        <p>{{ user.biography }}</p>
+    </div>
+
+    <div class="row">
+        <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" role="button">Modifier mon profil</a>
+    </div>
+</div>
+{% endblock %}

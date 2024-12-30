@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% trans "Log in" %}</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row text-center">
+        
+        <h1>{% trans "Log in" %}</h1>
+    
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Se connecter" class="btn btn-submit">
+        </form>
+    </div>
+    <div class="row text-center">
+        <h3>{% trans "Forgot your password?" %}</h3>
+        <a href="{% url 'password_reset' %}" role="button">{% trans "Reset it" %}</a>
+    </div>
+</div>
+<div class="container">
+    <div class="row text-center">
+        
+        <h1>{% trans "Not a member?" %}</h1>
+        <a class="btn btn-light" href="{% url 'accounts:signup' %}" role="button">{% trans "Register" %}</a>
+    </div>
+</div>
+{% endblock %}

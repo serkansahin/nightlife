@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ event.title }}</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if event.thumbnail %}
+    <div class="row">
+        <img class="img-fluid" src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
+    </div>
+    {% endif %}
+
+    <div class="row text-center">
+        <h1>{{ event.title }}</h1>
+        <p>Par {{ event.author.username }}</p>
+    </div>
+
+    <div class="row">
+        <p>{{ event.location }}</p>
+        <p><small class="text-body-secondary">{{ event.date }} | {% if event.price %}{{ event.price }}€{% else %}GRATUIT{% endif %}</small></p>
+        
+        <p>{{ event.content|safe|linebreaks }}</p>
+    </div>
+
+    <div class="row">
+        <a class="btn btn-light" href="{% url 'events:edit' slug=event.slug %}" role="button">Éditer</a>
+        <a class="btn btn-light" href="{% url 'events:delete' slug=event.slug %}" role="button">Supprimer</a>
+    </div>
+</div>
+{% endblock %}
