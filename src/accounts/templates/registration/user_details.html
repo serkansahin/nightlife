@@ -8,21 +8,30 @@
 <div class="container">
     {% if user.thumbnail %}
     <div class="row">
-        <img class="img-fluid" src="{{ user.thumbnail.url }}" alt="{{ user.username }}">
+        <div class="col">
+            <img class="img-fluid" src="{{ user.thumbnail.url }}" alt="{{ user.username }}">
+        </div>
     </div>
     {% endif %}
 
     <div class="row text-center">
-        <h1>{{ user.username }}</h1>
+        <div class="col">
+            <h1>{{ user.username }}</h1>
+        </div>
     </div>
 
     <div class="row">
-        <p>{{ user.town }}</p>
-        <p>{{ user.biography }}</p>
+        <div class="col">
+            <p>{{ user.town }}</p>
+            <p>{{ user.biography }}</p>
+        </div>
     </div>
 
     <div class="row">
-        <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" role="button">Modifier mon profil</a>
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" type="button">Modifier mon profil</a>
+            <a class="btn btn-danger" href="{% url 'accounts:userdelete' slug=user.slug %}" type="button">Supprimer mon profil</a>
+          </div>
     </div>
 </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic import CreateView, DetailView, UpdateView, DeleteView
 
 from accounts.forms import UserRegistrationForm
 from accounts.models import CustomUser
@@ -22,3 +22,10 @@ class UserUpdate(UpdateView):
     model = CustomUser
     template_name = "registration/user_update.html"
     fields = ['username', 'town', 'thumbnail',]
+
+@method_decorator(login_required, name="dispatch")
+class UserDelete(DeleteView):
+    model = CustomUser
+    template_name = "registration/user_confirm_delete.html"
+    context_object_name = "user"
+    success_url = reverse_lazy("home")

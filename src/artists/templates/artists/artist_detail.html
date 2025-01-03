@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ artist.name }}</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if artist.thumbnail %}
+    <div class="row">
+        <img class="img-fluid" src="{{ artist.thumbnail.url }}" alt="{{ artist.name }}">
+    </div>
+    {% endif %}
+
+    <div class="row text-center">
+        <h1>{{ artist.name }}</h1>
+        <h4>{{ artist.spotify }}</h4>
+        <h4>{{ artist.soundcloud }}</h4>
+        <h4>{{ artist.instagram }}</h4>
+        <h4>{{ artist.facebook }}</h4>
+    </div>
+
+    <div class="row">
+        <p>{{ artist.biography|safe|linebreaks }}</p>
+    </div>
+
+    <div class="row">
+        <a class="btn btn-light" href="{% url 'artists:edit' slug=artist.slug %}" role="button">Éditer</a>
+        <a class="btn btn-light" href="{% url 'artists:delete' slug=artist.slug %}" role="button">Supprimer</a>
+    </div>
+</div>
+{% endblock %}

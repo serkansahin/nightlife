@@ -67,7 +67,6 @@ class CustomUser(AbstractBaseUser):
     slug = models.SlugField(max_length=15, unique=True)
     town = models.CharField(max_length=30, null=True, verbose_name="Ville")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
-    biography = models.TextField(blank=True, verbose_name="Présentation")
     is_active = models.BooleanField(default=True)
     is_promoter = models.BooleanField(default=False, verbose_name="Êtes-vous organisateur ?")
     is_admin = models.BooleanField(default=False)
@@ -90,8 +89,7 @@ class CustomUser(AbstractBaseUser):
         return self.username
     
     def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.username)
+        self.slug = slugify(self.username)
 
         return super().save(*args, **kwargs)
     

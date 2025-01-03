@@ -29,7 +29,7 @@ class Event(models.Model):
 
     class meta:
         ordering = ["-created-on"]
-        verbose_name = "Article"
+        verbose_name = "Event"
 
     def __str__(self):
         return self.title
