@@ -6,31 +6,31 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="row">
-      <h1 class="text-center">La liste des artistes</h1>
+  <div class="container container-section">
+    <div class="row text-center">
+      <h1>La liste des artistes</h1><p>(A-Z)</p>
     </div>
+  </div>
+
+  <div class="container">
     {% if artists %}
       <div class="row row-cols-1 row-cols-md-4 g-4">
         {% for artist in artists %}
           <div class="col">
-            <div class="card h-100">
-              {% if artist.thumbnail %}
-                <a href="{% url 'artists:artist' slug=artist.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
-              {% else %}
-                <a href="{% url 'artists:artist' slug=artist.slug %}"><div class="card-img-top img-fluid"></div></a>
-              {% endif %}
-              <div class="card-body">
-                <div class="row">
-                  <div class="col-10">
-                    <a href="{% url 'artists:artist' slug=artist.slug %}"><h5 class="card-title">{{ artist.name }}</h5></a>
-                  </div>
-                  <div class="col-2">
-                    <img src="{% get_media_prefix %}icons/empty_heart.png" alt="" width="20" height="20" />
-                  </div>
+            <a href="{% url 'artists:artist' slug=artist.slug %}">
+              <div class="row container-circle">
+                <div class="circle">
+                  {% if artist.thumbnail %}
+                    <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
+                  {% else %}
+                    <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
+                  {% endif %}
                 </div>
               </div>
-            </div>
+              <div class="row text-center name">
+                <h4>{{ artist.name }}</h4>
+              </div>
+            </a>
           </div>
         {% endfor %}
       </div>
@@ -38,9 +38,11 @@
       <div class="col">
         <div class="row">
           <h2>Pas d'artistes pour le moment !</h2>
-          <a class="btn btn-light" href="{% url 'artists:create' %}" role="button">Ajouter un artiste</a>
         </div>
       </div>
     {% endif %}
+    <div class="row">
+      <a class="btn btn-light" href="{% url 'artists:create' %}" role="button">Ajouter un artiste</a>
+    </div>
   </div>
 {% endblock %}

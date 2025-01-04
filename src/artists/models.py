@@ -17,10 +17,10 @@ class Artist(models.Model):
     is_sponsored = models.BooleanField(default=False, verbose_name="Sponsorisé")
     biography = models.TextField(blank=True, verbose_name="Biographie")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
-    spotify = models.URLField(max_length=255, unique=True, blank=True)
-    soundcloud = models.URLField(max_length=255, unique=True, blank=True)
-    instagram = models.URLField(max_length=255, unique=True, blank=True)
-    facebook = models.URLField(max_length=255, unique=True, blank=True)
+    spotify = models.URLField(max_length=255, blank=True)
+    soundcloud = models.URLField(max_length=255, blank=True)
+    instagram = models.URLField(max_length=255, blank=True)
+    facebook = models.URLField(max_length=255, blank=True)
 
 
     class meta:

@@ -1,37 +1,35 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>{{ user.username }}</title>
+  <title>{{ user.username }}</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
+  <div class="containe-fluid">
     {% if user.thumbnail %}
-    <div class="row">
-        <div class="col">
-            <img class="img-fluid" src="{{ user.thumbnail.url }}" alt="{{ user.username }}">
-        </div>
-    </div>
+      <div class="row img-bg" style="background:url('{{ user.thumbnail.url }}'"></div>
     {% endif %}
+  </div>
 
+  <div class="container">
     <div class="row text-center">
-        <div class="col">
-            <h1>{{ user.username }}</h1>
-        </div>
+      <div class="col">
+        <h1>{{ user.username }}</h1>
+      </div>
     </div>
 
     <div class="row">
-        <div class="col">
-            <p>{{ user.town }}</p>
-            <p>{{ user.biography }}</p>
-        </div>
+      <div class="col">
+        <p>{{ user.town }}</p>
+        <p>{{ user.biography }}</p>
+      </div>
     </div>
 
     <div class="row">
-        <div class="d-grid gap-2 col-6 mx-auto">
-            <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" type="button">Modifier mon profil</a>
-            <a class="btn btn-danger" href="{% url 'accounts:userdelete' slug=user.slug %}" type="button">Supprimer mon profil</a>
-          </div>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" type="button">Modifier mon profil</a>
+        <a class="btn btn-danger" href="{% url 'accounts:userdelete' slug=user.slug %}" type="button">Supprimer mon profil</a>
+      </div>
     </div>
-</div>
+  </div>
 {% endblock %}

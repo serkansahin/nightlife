@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from artists.models import Artist
+from events.models import Event
 
 class ArtistsList(ListView):
     model = Artist
@@ -18,7 +19,7 @@ class ArtistsList(ListView):
     template_name = "artists/artists_list.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('name')
 
         #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
         if self.request.user.is_authenticated:
@@ -45,6 +46,11 @@ class ArtistDetail(DetailView):
     model = Artist
     template_name = "artists/artist_detail.html"
     context_object_name = "artist"
+
+    #def get_context_data(self, **kwargs):
+    #    artist = super(ArtistDetail, self).get_context_data(**kwargs)
+    #    artist['events'] = Event.objects.filter(artists=self.object)
+    #    return artist
 
 
 @method_decorator(login_required, name="dispatch")

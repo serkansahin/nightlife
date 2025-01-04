@@ -6,6 +6,7 @@ from django.urls import reverse
 
 User = get_user_model()
 
+from artists.models import Artist
 from nightlife.methods import PathAndRename
 
 # Create your models here.
@@ -26,6 +27,7 @@ class Event(models.Model):
     date = models.DateTimeField(blank=True, null=True)
     content = models.TextField(blank=True, verbose_name="Contenu")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
+    artists = models.ManyToManyField(Artist, related_name="events")
 
     class meta:
         ordering = ["-created-on"]

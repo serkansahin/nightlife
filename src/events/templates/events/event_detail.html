@@ -1,32 +1,81 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    <title>{{ event.title }}</title>
+  <title>{{ event.title }}</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
+  <div class="container-fluid">
     {% if event.thumbnail %}
-    <div class="row">
-        <img class="img-fluid" src="{{ event.thumbnail.url }}" alt="{{ event.title }}">
-    </div>
+      <div class="row img-bg" style="background:url('{{ event.thumbnail.url }}'"></div>
     {% endif %}
-
+  </div>
+  <div class="container container-section">
     <div class="row text-center">
+      <div class="col">
         <h1>{{ event.title }}</h1>
-        <p>Par {{ event.author.username }}</p>
+        <a href="{% url 'accounts:userdetails' slug=event.author.username|slugify %}"><p>Par {{ event.author.username }}</p></a>
+      </div>
     </div>
 
     <div class="row">
-        <p>{{ event.location }}</p>
-        <p><small class="text-body-secondary">{{ event.date }} | {% if event.price %}{{ event.price }}€{% else %}GRATUIT{% endif %}</small></p>
-        
-        <p>{{ event.content|safe|linebreaks }}</p>
-    </div>
-
-    <div class="row">
+      <div class="col d-grid">
         <a class="btn btn-light" href="{% url 'events:edit' slug=event.slug %}" role="button">Éditer</a>
-        <a class="btn btn-light" href="{% url 'events:delete' slug=event.slug %}" role="button">Supprimer</a>
+      </div>
+      <div class="col d-grid">
+        <a class="btn btn-outline-danger" href="{% url 'events:delete' slug=event.slug %}" role="button">Supprimer</a>
+      </div>
     </div>
-</div>
+
+    <div class="row">
+      <h1>Les infos</h1>
+      <p>{{ event.location }}</p>
+      <p>
+        <small class="text-body-secondary">
+          {{ event.date }} |{% if event.price %}
+            {{ event.price }}€
+          {% else %}
+            GRATUIT
+          {% endif %}
+        </small>
+      </p>
+      <h3>Description</h3>
+      <p>{{ event.content|safe|linebreaks }}</p>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les artistes présents</h1>
+        {% if event.artists %}
+          <div class="row row-cols-1 row-cols-md-4 g-4">
+            {% for artist in event.artists.all %}
+              <div class="col">
+                <a href="{% url 'artists:artist' slug=artist.slug %}">
+                  <div class="row container-circle">
+                    <div class="circle">
+                      {% if artist.thumbnail %}
+                        <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
+                      {% else %}
+                        <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="row text-center name">
+                    <h4>{{ artist.name }}</h4>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="col">
+            <h5>Pas encore d'artistes annoncé(e)s !</h5>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

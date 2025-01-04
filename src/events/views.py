@@ -31,7 +31,7 @@ class EventsList(ListView):
     template_name = "events/event_list.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        queryset = super().get_queryset().order_by('date')
 
         #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
         if self.request.user.is_authenticated:
