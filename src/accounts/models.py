@@ -7,8 +7,10 @@ from django.urls import reverse
 
 from nightlife.methods import PathAndRename
 
+from events.models import Event
+
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, town, thumbnail, password=None):
+    def create_user(self, email, username, town, thumbnail, biography, password=None):
         if not email:
             raise ValueError("Vous devez rentrer un email")
         email = self.normalize_email(email)
@@ -17,6 +19,7 @@ class CustomUserManager(BaseUserManager):
             username=username,
             town=town,
             thumbnail=thumbnail,
+            biography=biography
             )
         user.is_promoter = False
         user.set_password(password)
@@ -67,6 +70,7 @@ class CustomUser(AbstractBaseUser):
     slug = models.SlugField(max_length=15, unique=True)
     town = models.CharField(max_length=30, null=True, verbose_name="Ville")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
+    biography = models.TextField(blank=True, verbose_name="Biographie")
     is_active = models.BooleanField(default=True)
     is_promoter = models.BooleanField(default=False, verbose_name="Êtes-vous organisateur ?")
     is_admin = models.BooleanField(default=False)

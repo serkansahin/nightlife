@@ -21,7 +21,7 @@ class UserDetailView(DetailView):
 class UserUpdate(UpdateView):
     model = CustomUser
     template_name = "registration/user_update.html"
-    fields = ['username', 'town', 'thumbnail',]
+    fields = ['username', 'town', 'thumbnail', 'biography']
 
 @method_decorator(login_required, name="dispatch")
 class UserDelete(DeleteView):

@@ -30,7 +30,7 @@ class ArtistsList(ListView):
 class ArtistCreate(CreateView):
     model = Artist
     template_name = "artists/artist_create.html"
-    fields = ['name', 'biography','thumbnail','spotify','soundcloud','instagram','facebook']
+    fields = ['name', 'biography','thumbnail','spotify','soundcloud','instagram','facebook', 'playlist']
 
     def form_valid(self, form):      
         form.instance.created_on = datetime.datetime.now()
@@ -40,7 +40,7 @@ class ArtistCreate(CreateView):
 class ArtistUpdate(UpdateView):
     model = Artist
     template_name = "artists/artist_update.html"
-    fields = ['name', 'biography','thumbnail','spotify','soundcloud','instagram','facebook']
+    fields = ['name', 'biography','thumbnail','spotify','soundcloud','instagram','facebook', 'playlist']
 
 class ArtistDetail(DetailView):
     model = Artist

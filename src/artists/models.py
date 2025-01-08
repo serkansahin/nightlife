@@ -21,6 +21,7 @@ class Artist(models.Model):
     soundcloud = models.URLField(max_length=255, blank=True)
     instagram = models.URLField(max_length=255, blank=True)
     facebook = models.URLField(max_length=255, blank=True)
+    playlist = models.URLField(max_length=255, blank=True)
 
 
     class meta:

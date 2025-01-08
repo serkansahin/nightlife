@@ -14,7 +14,7 @@
   <div class="container container-section">
     <div class="row text-center">
       <div class="col">
-        <h1>{{ event.title }}</h1>
+        <h1>{{ event.title|upper }}</h1>
         <a href="{% url 'accounts:userdetails' slug=event.author.username|slugify %}"><p>Par {{ event.author.username }}</p></a>
       </div>
     </div>
@@ -29,11 +29,35 @@
     </div>
 
     <div class="row">
+      <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
+        {% csrf_token %}
+
+        {% if request.user not in event.interested.all %}
+          <button type="submit" value="{{ event.slug }}" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Sauvegarder l'évènement</button>
+        {% else %}
+          <button type="submit" value="{{ event.slug }}" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Evenement sauvegardé !</button>
+        {% endif %}
+
+        {% if event.interested.count > 0 %}
+          <p>{{ event.interested.count }} intéressé(e)s</p>
+        {% endif %}
+      </form>
+    </div>
+
+    <div class="row">
       <h1>Les infos</h1>
-      <p>{{ event.location }}</p>
+      {% if event.location %}
+        <p>{{ event.location }}</p>
+      {% endif %}
+      {% if event.address %}
+        <p>{{ event.address }}</p>
+      {% endif %}
+      {% if event.town %}
+        <p>{{ event.town }}</p>
+      {% endif %}
       <p>
         <small class="text-body-secondary">
-          {{ event.date }} |{% if event.price %}
+          {{ event.starts }} au {{ event.ends }} |{% if event.price %}
             {{ event.price }}€
           {% else %}
             GRATUIT
@@ -48,7 +72,7 @@
   <div class="container-fluid bg-light">
     <div class="container container-section">
       <div class="row">
-        <h1>Les artistes présents</h1>
+        <h1>La lineup</h1>
         {% if event.artists %}
           <div class="row row-cols-1 row-cols-md-4 g-4">
             {% for artist in event.artists.all %}

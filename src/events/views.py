@@ -1,7 +1,8 @@
 import datetime
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
 
 # Create your views here.
@@ -42,7 +43,7 @@ class EventsList(ListView):
 class EventCreate(CreateView):
     model = Event
     template_name = "events/event_create.html"
-    fields = ['title', 'location', 'content','thumbnail',]
+    fields = ['title', 'starts', 'ends', 'location', 'address','content','thumbnail','price','published']
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -56,16 +57,26 @@ class EventCreate(CreateView):
 class EventUpdate(UpdateView):
     model = Event
     template_name = "events/event_update.html"
-    fields = ['title', 'content', 'thumbnail', 'published',]
+    fields = ['title', 'starts', 'ends', 'location', 'address','content','thumbnail','price','published']
 
 class EventDetail(DetailView):
     model = Event
     template_name = "events/event_detail.html"
     context_object_name = "event"
 
-
 @method_decorator(login_required, name="dispatch")
 class EventDelete(DeleteView):
     model = Event
     context_object_name = "event"
     success_url = reverse_lazy("events:list")
+
+@login_required
+def EventInterestedView(request, slug):
+    context = {}
+    event = get_object_or_404(Event, slug=slug)
+    if event.interested.filter(id=request.user.id).exists():
+        event.interested.remove(request.user)
+    else:
+        event.interested.add(request.user)
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
