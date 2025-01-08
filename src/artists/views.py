@@ -1,7 +1,8 @@
 import datetime
 from typing import Any
 from django.db.models.query import QuerySet
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404, render
 from django.template.defaultfilters import slugify
 
 # Create your views here.
@@ -47,14 +48,21 @@ class ArtistDetail(DetailView):
     template_name = "artists/artist_detail.html"
     context_object_name = "artist"
 
-    #def get_context_data(self, **kwargs):
-    #    artist = super(ArtistDetail, self).get_context_data(**kwargs)
-    #    artist['events'] = Event.objects.filter(artists=self.object)
-    #    return artist
-
 
 @method_decorator(login_required, name="dispatch")
 class ArtistDelete(DeleteView):
     model = Artist
     context_object_name = "artist"
     success_url = reverse_lazy("artists:list")
+
+
+@login_required
+def ArtistFollowingView(request, slug):
+    context = {}
+    artist = get_object_or_404(Artist, slug=slug)
+    if artist.followers.filter(id=request.user.id).exists():
+        artist.followers.remove(request.user)
+    else:
+        artist.followers.add(request.user)
+
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

@@ -49,7 +49,19 @@
     </div>
 
     <div class="row">
-      <a class="btn btn-outline-danger" href="" role="button"><i class="bi bi-heart"></i> Suivre l'artiste !</a>
+      <form action="{% url 'artists:follow' slug=artist.slug %}" method="POST">
+        {% csrf_token %}
+
+        {% if request.user not in artist.followers.all %}
+          <button type="submit" value="{{ artist.slug }}" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Suivre l'artiste</button>
+        {% else %}
+          <button type="submit" value="{{ artist.slug }}" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Artiste suivi(e) !</button>
+        {% endif %}
+
+        {% if artist.followers.count > 0 %}
+          <p>{{ artist.followers.count }} followers</p>
+        {% endif %}
+      </form>
     </div>
 
     <div class="row">

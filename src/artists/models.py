@@ -1,4 +1,5 @@
 import datetime
+from django.conf import settings
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
@@ -22,6 +23,7 @@ class Artist(models.Model):
     instagram = models.URLField(max_length=255, blank=True)
     facebook = models.URLField(max_length=255, blank=True)
     playlist = models.URLField(max_length=255, blank=True)
+    followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
 
 
     class meta:
@@ -40,3 +42,6 @@ class Artist(models.Model):
     #Définir la redirection
     def get_absolute_url(self):
         return reverse("artists:artist", kwargs={"slug": self.slug})
+    
+    def total_followers(self):
+        return self.followers.count()
