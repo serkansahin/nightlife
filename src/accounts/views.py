@@ -29,3 +29,13 @@ class UserDelete(DeleteView):
     template_name = "registration/user_confirm_delete.html"
     context_object_name = "user"
     success_url = reverse_lazy("home")
+
+class UserFollowingsView(DetailView):
+    model = CustomUser
+    template_name = "registration/user_followings.html"
+    context_object_name = "user"
+
+class UserInterestedView(DetailView):
+    model = CustomUser
+    template_name = "registration/user_events_interested.html"
+    context_object_name = "user"

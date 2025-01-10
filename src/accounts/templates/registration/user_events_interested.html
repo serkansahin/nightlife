@@ -2,18 +2,19 @@
 {% load static %}
 
 {% block title %}
-  <title>Les évènements du moment</title>
+  <title>Les évènements intéréssés</title>
 {% endblock %}
 
 {% block content %}
   <div class="container container-section">
     <div class="row">
-      <h1 class="text-center">La liste des évènements</h1>
+      <h1 class="text-center">La liste des évènements intéréssés</h1>
     </div>
   </div>
   <div class="container container-section">
+    {% if user.interested %}
     <div class="row row-cols-1 row-cols-md-4 g-4">
-      {% for event in events %}
+      {% for event in user.interested.all %}
         <div class="col">
           <div class="card h-100">
             {% if event.thumbnail %}
@@ -55,5 +56,14 @@
         </div>
       {% endfor %}
     </div>
+
+    {% else %}
+      <div class="col">
+        <div class="row">
+          <h2>Pas d'évènement suivi pour le moment !</h2>
+        </div>
+      </div>
+    {% endif %}
+
   </div>
 {% endblock %}

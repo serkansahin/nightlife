@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Les artistes du moment</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container container-section">
+    <div class="row text-center">
+      <h1>Mes artistes suivi(e)s</h1><p>(A-Z)</p>
+    </div>
+  </div>
+
+  <div class="container">
+    {% if user.fan %}
+      <div class="row row-cols-1 row-cols-md-4 g-4">
+        {% for artist in user.fan.all %}
+          <div class="col">
+            <a href="{% url 'artists:artist' slug=artist.slug %}">
+              <div class="row container-circle">
+                <div class="circle">
+                  {% if artist.thumbnail %}
+                    <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
+                  {% else %}
+                    <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="row text-center name">
+                <h4>{{ artist.name }}</h4>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="col">
+        <div class="row">
+          <h2>Pas d'artistes pour le moment !</h2>
+        </div>
+      </div>
+    {% endif %}
+    <div class="row">
+      <a class="btn btn-light" href="{% url 'artists:create' %}" role="button">Ajouter un artiste</a>
+    </div>
+  </div>
+{% endblock %}

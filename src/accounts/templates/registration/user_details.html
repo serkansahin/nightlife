@@ -23,10 +23,10 @@
 
     <div class="row">
       <div class="col d-grid">
-        <a class="btn btn-light" href="{% url 'accounts:useredit' slug=user.slug %}" role="button">Éditer</a>
+        <a class="btn btn-light" href="{% url 'accounts:edit' slug=user.slug %}" role="button">Éditer</a>
       </div>
       <div class="col d-grid">
-        <a class="btn btn-outline-danger" href="{% url 'accounts:userdelete' slug=user.slug %}" role="button">Supprimer</a>
+        <a class="btn btn-outline-danger" href="{% url 'accounts:delete' slug=user.slug %}" role="button">Supprimer</a>
       </div>
     </div>
 
@@ -56,11 +56,19 @@
                 {% endif %}
                 <div class="card-body">
                   <div class="row">
-                    <div class="col-10">
+                    <div class="col">
                       <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title }}</h5></a>
                     </div>
                     <div class="col-2">
-                      <img src="{% get_media_prefix %}icons/empty_heart.png" alt="" width="20" height="20" />
+                      <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
+                        {% csrf_token %}
+    
+                        {% if request.user not in event.interested.all %}
+                          <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
+                        {% else %}
+                          <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
+                        {% endif %}
+                      </form>
                     </div>
                   </div>
                   <div class="row">

@@ -36,9 +36,9 @@
             </a>
             <ul class="dropdown-menu text-small" style="">
               <li class="dropdown-header">👋 {{ request.user }}</li>
-              <li><a class="dropdown-item" href="{% url 'accounts:userdetails' slug=user.slug %}">Mon profil</a></li>
-              <li><a class="dropdown-item" href="#">Mes évènements</a></li>
-              <li><a class="dropdown-item" href="#">Mes artistes favoris</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:details' slug=user.slug %}">Mon profil</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:interested' slug=user.slug %}">Mes évènements</a></li>
+              <li><a class="dropdown-item" href="{% url 'accounts:followings' slug=user.slug %}">Mes artistes favoris</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" href="{% url 'logout' %}">Me déconnecter</a></li>
             </ul>
