@@ -47,7 +47,7 @@ class Event(models.Model):
     #Définir la redirection
     def get_absolute_url(self):
         return reverse("events:event", kwargs={"slug": self.slug})
-    
+
     def total_interested(self):
         return self.interested.count()
    

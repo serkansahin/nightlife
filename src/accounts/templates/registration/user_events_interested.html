@@ -25,7 +25,12 @@
             <div class="card-body">
               <div class="row">
                 <div class="col">
-                  <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
+                  <div class="headline">
+                    <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
+                    {% if event.is_sponsored %}
+                      <p class="fw-lighter fst-italic">- Sponsorisé</p>
+                    {% endif %}
+                  </div>
                 </div>
                 <div class="col-2">
                   <form action="{% url 'events:interested' slug=event.slug %}" method="POST">

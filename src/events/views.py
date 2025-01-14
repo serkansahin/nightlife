@@ -4,6 +4,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
+from django.db.models import Count
 
 # Create your views here.
 from django.urls import reverse, reverse_lazy
@@ -11,6 +12,8 @@ from django.views.generic import ListView, CreateView, UpdateView, DetailView, D
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
+from accounts.models import CustomUser
+from artists.models import Artist
 from events.models import Event
 
 class Home(ListView):
@@ -19,12 +22,14 @@ class Home(ListView):
     template_name = "events/home.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+        current_week = datetime.date.today().isocalendar()[1] 
+        queryset = {'best_events_of_the_week': Event.objects.filter(starts__week=current_week, published = True).annotate(interested_count=Count('interested')).order_by('-interested_count')[:4],
+                    'favourite_artists': Artist.objects.annotate(followers_count=Count('followers')).order_by('-followers_count')[:4],
+                    'last_events': Event.objects.filter(published = True).order_by('-created_on')[:4],
+                    'top_promoters': CustomUser.objects.annotate(events_count=Count('author')).order_by('-events_count')[:4]}
 
-        #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
-        if self.request.user.is_authenticated:
-            return queryset
-        return queryset.filter(published=True)
+        return queryset
+
 
 class EventsList(ListView):
     model = Event
@@ -52,6 +57,7 @@ class EventCreate(CreateView):
         form.instance.created_on = datetime.datetime.now()
         
         return super().form_valid(form)
+    
 
 @method_decorator(login_required, name="dispatch")
 class EventUpdate(UpdateView):

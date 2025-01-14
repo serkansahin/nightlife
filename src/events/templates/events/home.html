@@ -1,15 +1,219 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}
-    <title>Nightlife</title>
+  <title>Nightlife</title>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="bg-light p-5 text-center">
-        <h2>Nightlife</h2>
-        <p>Le <mark>meilleur</mark> agenda de vos sorties musicales</p>
-        <button class="btn btn-success">Success</button>
+  <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="2" aria-label="Slide 3"></button>
     </div>
-</div>
+    <div class="carousel-inner">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>First slide label</h5>
+          <p>Some representative placeholder content for the first slide.</p>
+        </div>
+        <img src="{% get_media_prefix %}events/3ee28256b81440e3bf19e39193fae067.jpg" class="d-block w-100" alt="..." />
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Second slide label</h5>
+          <p>Some representative placeholder content for the second slide.</p>
+        </div>
+        <img src="{% get_media_prefix %}events/319f109c3bd3497b80aa2a39708be0c5.jpg" class="d-block w-100" alt="..." />
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-caption d-none d-md-block">
+          <h5>Third slide label</h5>
+          <p>Some representative placeholder content for the third slide.</p>
+        </div>
+        <img src="{% get_media_prefix %}events/3544c14601e645b5aaf1f7b60f873f01.png" class="d-block w-100" alt="..." />
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les évènements les plus populaires de la semaine</h1>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for event in events.best_events_of_the_week %}
+          <div class="col">
+            <div class="card h-100">
+              {% if event.thumbnail %}
+                <a href="{% url 'events:event' slug=event.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
+              {% else %}
+                <a href="{% url 'events:event' slug=event.slug %}"><div class="card-img-top img-fluid"></div></a>
+              {% endif %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="headline">
+                      <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
+                      {% if event.is_sponsored %}
+                        <p class="fw-lighter fst-italic">- Sponsorisé</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
+                      {% csrf_token %}
+
+                      {% if request.user not in event.interested.all %}
+                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
+                      {% else %}
+                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
+                      {% endif %}
+                    </form>
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="card-text">{{ event.location }}</p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">
+                      {{ event.starts }} |{% if event.price %}
+                        {{ event.price }}€
+                      {% else %}
+                        GRATUIT
+                      {% endif %}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les artistes du moment</h1>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for artist in events.favourite_artists %}
+          <div class="col">
+            <a href="{% url 'artists:artist' slug=artist.slug %}">
+              <div class="row container-circle">
+                <div class="circle">
+                  {% if artist.thumbnail %}
+                    <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
+                  {% else %}
+                    <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="row text-center name">
+                <h4>{{ artist.name }}</h4>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les derniers évènements créés</h1>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for event in events.last_events %}
+          <div class="col">
+            <div class="card h-100">
+              {% if event.thumbnail %}
+                <a href="{% url 'events:event' slug=event.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
+              {% else %}
+                <a href="{% url 'events:event' slug=event.slug %}"><div class="card-img-top img-fluid"></div></a>
+              {% endif %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col">
+                    <div class="headline">
+                      <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
+                      {% if event.is_sponsored %}
+                        <p class="fw-lighter fst-italic">- Sponsorisé</p>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="col-2">
+                    <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
+                      {% csrf_token %}
+
+                      {% if request.user not in event.interested.all %}
+                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
+                      {% else %}
+                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
+                      {% endif %}
+                    </form>
+                  </div>
+                </div>
+                <div class="row">
+                  <p class="card-text">{{ event.location }}</p>
+                  <p class="card-text">
+                    <small class="text-body-secondary">
+                      {{ event.starts }} |{% if event.price %}
+                        {{ event.price }}€
+                      {% else %}
+                        GRATUIT
+                      {% endif %}
+                    </small>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Nos top créateurs</h1>
+      </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for promoter in events.top_promoters %}
+          <div class="col">
+            <a href="{% url 'accounts:details' slug=promoter.username|slugify %}">
+              <div class="row container-circle">
+                <div class="circle">
+                  {% if promoter.thumbnail %}
+                    <img src="{{ promoter.thumbnail.url }}" alt="{{ promoter.username }}" />
+                  {% else %}
+                    <img src="{% get_media_prefix %}users/default.png" alt="{{ promoter.username }}" />
+                  {% endif %}
+                </div>
+              </div>
+              <div class="row text-center name">
+                <h4>{{ promoter.username }}</h4>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+
+
 {% endblock %}
