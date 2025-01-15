@@ -1,13 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Créer un artiste</title>
+    <title>Ajouter un artiste</title>
 {% endblock %}
 
 {% block content %}
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Créer" class="btn btn-submit">
-</form>
+<div class="container container-section">
+    <div class="row">
+      <h1 class="text-center">Ajouter un artiste</h1>
+    </div>
+  </div>
+  <div class="container container-section">
+    <div class="row">
+        <div class="col">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="Créer" class="btn btn-submit">
+            </form>
+        </div>
+    </div>
+  </div>
 {% endblock %}
