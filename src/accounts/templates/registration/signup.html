@@ -1,21 +1,26 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Créer un compte</title>
+  <title>Créer mon compte</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        
-        <h1>Créer un compte</h1>
-    
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="S'inscrire" class="btn btn-submit">
-        </form>
-
+  <div class="container container-section">
+    <div class="row">
+      <h1 class="text-center">Créer mon compte</h1>
     </div>
-</div>
+  </div>
+  <div class="container container-section">
+    <div class="row row-padding col-8 mx-auto">
+      <div class="col">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">{{ form }}</div>
+          <div class="row row-padding">
+            <input type="submit" role="button" value="Créer mon compte" class="btn btn-submit btn-light" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

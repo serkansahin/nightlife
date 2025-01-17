@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
-{% load i18n %}
 
 {% block title %}
-    <title>{% trans "Confirm delete user" %}</title>
+  <title>Supprimer mon comptee</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        
-        <p>Êtes-vous sûr de vouloir nous quitter {{ user.username }} ?</p>
-        <form method="post" action="">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Supprimer mon compte" />
-        </form>
-
+  <div class="container container-section">
+    <div class="row">
+      <h1 class="text-center">Supprimer mon compte</h1>
     </div>
-</div>
+  </div>
+  <div class="container container-section">
+    <div class="row text-center">
+      <h3>Êtes-vous sûr de vouloir nous quitter {{ user.username }} ?</h3>
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Supprimer mon compte" class="btn btn-submit btn-light" />
+      </form>
+    </div>
+  </div>
 {% endblock %}

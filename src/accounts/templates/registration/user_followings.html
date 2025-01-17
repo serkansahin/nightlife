@@ -14,7 +14,7 @@
 
   <div class="container">
     {% if user.fan %}
-      <div class="row">
+      <div class="row row-padding">
         {% for artist in user.fan.all %}
           <div class="col">
             <a href="{% url 'artists:artist' slug=artist.slug %}">
@@ -36,13 +36,10 @@
       </div>
     {% else %}
       <div class="col">
-        <div class="row">
+        <div class="row row-padding">
           <h2>Pas d'artistes pour le moment !</h2>
         </div>
       </div>
     {% endif %}
-    <div class="row">
-      <a class="btn btn-light" href="{% url 'artists:create' %}" role="button">Ajouter un artiste</a>
-    </div>
   </div>
 {% endblock %}

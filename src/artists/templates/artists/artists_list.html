@@ -16,7 +16,7 @@
     {% if artists %}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in artists %}
-          <div class="col">
+          <div class="col row-padding">
             <a href="{% url 'artists:artist' slug=artist.slug %}">
               <div class="row container-circle">
                 <div class="circle">
@@ -36,12 +36,12 @@
       </div>
     {% else %}
       <div class="col">
-        <div class="row">
+        <div class="row row-padding">
           <h2>Pas d'artistes pour le moment !</h2>
         </div>
       </div>
     {% endif %}
-    <div class="row">
+    <div class="row row-padding col-6 mx-auto">
       <a class="btn btn-light" href="{% url 'artists:create' %}" role="button">Ajouter un artiste</a>
     </div>
   </div>

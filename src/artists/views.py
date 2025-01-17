@@ -22,10 +22,7 @@ class ArtistsList(ListView):
     def get_queryset(self):
         queryset = super().get_queryset().order_by('name')
 
-        #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
-        if self.request.user.is_authenticated:
-            return queryset
-        return queryset.filter(published=True)
+        return queryset
     
 @method_decorator(login_required, name="dispatch")
 class ArtistCreate(CreateView):

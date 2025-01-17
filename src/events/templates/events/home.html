@@ -47,10 +47,10 @@
 
   <div class="container-fluid">
     <div class="container container-section">
-      <div class="row">
+      <div class="row row-padding">
         <h1>Les évènements les plus populaires de la semaine</h1>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+      <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for event in events.best_events_of_the_week %}
           <div class="col">
             <div class="card h-100">
@@ -98,15 +98,18 @@
           </div>
         {% endfor %}
       </div>
+      <div class="row row-padding col-6 mx-auto">
+        <a class="btn btn-light" href="{% url 'events:list' %}" role="button">Voir tous nos évènements</a>
+      </div>
     </div>
   </div>
 
   <div class="container-fluid bg-light">
     <div class="container container-section">
-      <div class="row">
+      <div class="row row-padding">
         <h1>Les artistes du moment</h1>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+      <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in events.favourite_artists %}
           <div class="col">
             <a href="{% url 'artists:artist' slug=artist.slug %}">
@@ -126,15 +129,18 @@
           </div>
         {% endfor %}
       </div>
+      <div class="row row-padding col-6 mx-auto">
+        <a class="btn btn-outline-secondary" href="{% url 'artists:list' %}" role="button">Voir tous nos artistes</a>
+      </div>
     </div>
   </div>
 
   <div class="container-fluid">
     <div class="container container-section">
-      <div class="row">
+      <div class="row row-padding">
         <h1>Les derniers évènements créés</h1>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+      <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for event in events.last_events %}
           <div class="col">
             <div class="card h-100">
@@ -182,16 +188,19 @@
           </div>
         {% endfor %}
       </div>
+      <div class="row row-padding col-6 mx-auto">
+        <a class="btn btn-light" href="{% url 'events:list' %}" role="button">Voir tous nos évènements</a>
+      </div>
     </div>
   </div>
 
 
   <div class="container-fluid bg-light">
     <div class="container container-section">
-      <div class="row">
+      <div class="row row-padding">
         <h1>Nos top créateurs</h1>
       </div>
-      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
+      <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for promoter in events.top_promoters %}
           <div class="col">
             <a href="{% url 'accounts:details' slug=promoter.username|slugify %}">

@@ -11,12 +11,16 @@
     </div>
   </div>
   <div class="container container-section">
-    <div class="row">
-      <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Créer" class="btn btn-submit" />
-      </form>
+    <div class="row row-padding col-8 mx-auto">
+      <div class="col">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">{{ form }}</div>
+          <div class="row row-padding">
+            <input type="submit" role="button" value="Editer {{ artist.name }}" class="btn btn-submit btn-light" />
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

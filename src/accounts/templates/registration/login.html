@@ -2,31 +2,38 @@
 {% load i18n %}
 
 {% block title %}
-    <title>{% trans "Log in" %}</title>
+  <title>{% trans 'Log in' %}</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        
-        <h1>{% trans "Log in" %}</h1>
-    
-        <form method="POST">
+  <div class="container container-section text-center">
+    <div class="row">
+      <h1>Espace de connexion</h1>
+    </div>
+  </div>
+  <div class="container-fluid bg-light">
+    <div class="container container-section text-center">
+      <div class="row row-padding col-8 mx-auto">
+        <div class="col">
+          <h3>{% trans 'Log in' %}</h3>
+          <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Se connecter" class="btn btn-submit">
-        </form>
+            <div class="row">{{ form }}</div>
+            <div class="row row-padding">
+              <input type="submit" role="button" value="{% trans 'Log in' %}" class="btn btn-submit btn-light" />
+              <a href="{% url 'password_reset' %}" role="button" class="btn btn-light">Réinitialiser le mot de passe</a>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
-    <div class="row text-center">
-        <h3>{% trans "Forgot your password?" %}</h3>
-        <a href="{% url 'password_reset' %}" role="button">{% trans "Reset it" %}</a>
+  </div>
+  <div class="container-fluid text-center">
+    <div class="container container-section text-center">
+      <div class="row row-padding col-6 mx-auto">
+        <h3>Pas de compte ?</h3>
+        <a class="btn btn-light" href="{% url 'accounts:signup' %}" role="button">S'inscrire</a>
+      </div>
     </div>
-</div>
-<div class="container">
-    <div class="row text-center">
-        
-        <h1>{% trans "Not a member?" %}</h1>
-        <a class="btn btn-light" href="{% url 'accounts:signup' %}" role="button">{% trans "Register" %}</a>
-    </div>
-</div>
+  </div>
 {% endblock %}

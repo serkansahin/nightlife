@@ -29,19 +29,27 @@
     </div>
 
     <div class="row">
-      <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
-        {% csrf_token %}
+      <div class="col d-grid">
+        <a class="btn btn-light" href="" role="button">Billetterie</a>
+      </div>
+      <div class="col d-grid">
+        <div class="row">
+          <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
+            {% csrf_token %}
 
-        {% if request.user not in event.interested.all %}
-          <button type="submit" value="{{ event.slug }}" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Sauvegarder l'évènement</button>
-        {% else %}
-          <button type="submit" value="{{ event.slug }}" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Evenement sauvegardé !</button>
-        {% endif %}
-
-        {% if event.interested.count > 0 %}
+            {% if request.user not in event.interested.all %}
+              <button type="submit" value="{{ event.slug }}" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Sauvegarder l'évènement</button>
+            {% else %}
+              <button type="submit" value="{{ event.slug }}" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Evenement sauvegardé !</button>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+      {% if event.interested.count > 0 %}
+        <div class="row">
           <p>{{ event.interested.count }} intéressé(e)s</p>
-        {% endif %}
-      </form>
+        </div>
+      {% endif %}
     </div>
 
     <div class="row">

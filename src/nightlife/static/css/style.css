@@ -4,6 +4,14 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.row-padding {
+    padding: 10px 0;
+}
+
+.form-label {
+    margin-top: .5rem;
+}
+
 .container-section {
     padding: 50px 0;
 }
