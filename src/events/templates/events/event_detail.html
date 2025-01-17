@@ -84,6 +84,15 @@
           {% endif %}
         </small>
       </p>
+      {% if event.tags.all %}
+      <div class="margin-bottom">
+        <h5>
+          {% for tag in event.tags.all %}
+            <span class="badge rounded-pill">{{ tag.name }}</span>
+          {% endfor %}
+        </h5>
+      </div>
+      {% endif %}
       <h3>Description</h3>
       <p>{{ event.content|safe|linebreaks }}</p>
     </div>

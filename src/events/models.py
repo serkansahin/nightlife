@@ -9,6 +9,16 @@ from artists.models import Artist
 from nightlife.methods import PathAndRename
 
 # Create your models here.
+class Tag(models.Model):
+    name = models.CharField(max_length=255, unique=True, verbose_name="tag")
+
+    class meta:
+        ordering = ["name"]
+    
+    def __str__(self):
+        return self.name
+    
+
 class Event(models.Model):
     path_and_rename = PathAndRename("events/")
 
@@ -30,6 +40,7 @@ class Event(models.Model):
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
     artists = models.ManyToManyField(Artist, related_name="events")
     interested = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="interested")
+    tags = models.ManyToManyField(Tag, related_name='tags')
 
     class meta:
         ordering = ["-created-on"]

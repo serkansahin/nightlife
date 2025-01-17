@@ -87,9 +87,7 @@
         <p class="justify">{{ artist.biography|safe|linebreaksbr }}</p>
       </div>
     </div>
-    
   </div>
-
 
   <div class="container-fluid bg-light">
     <div class="container container-section">
@@ -120,7 +118,7 @@
                     <div class="col-2">
                       <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
                         {% csrf_token %}
-    
+
                         {% if request.user not in event.interested.all %}
                           <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
                         {% else %}
@@ -139,6 +137,11 @@
                           GRATUIT
                         {% endif %}
                       </small>
+                      {% if event.tags %}
+                        {% for tag in event.tags.all %}
+                          <span class="badge rounded-pill">{{ tag.name }}</span>
+                        {% endfor %}
+                      {% endif %}
                     </p>
                   </div>
                 </div>

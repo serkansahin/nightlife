@@ -48,7 +48,7 @@ class EventsList(ListView):
 class EventCreate(CreateView):
     model = Event
     template_name = "events/event_create.html"
-    fields = ['title', 'starts', 'ends', 'location', 'address','content','thumbnail','price','published']
+    fields = ['title', 'starts', 'ends', 'location', 'address', 'content', 'thumbnail', 'price', 'tags', 'published']
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -63,7 +63,7 @@ class EventCreate(CreateView):
 class EventUpdate(UpdateView):
     model = Event
     template_name = "events/event_update.html"
-    fields = ['title', 'starts', 'ends', 'location', 'address','content','thumbnail','price','published']
+    fields = ['title', 'starts', 'ends', 'location', 'address', 'content', 'thumbnail', 'price', 'tags', 'published']
 
 class EventDetail(DetailView):
     model = Event

@@ -59,6 +59,11 @@
                     {% endif %}
                   </small>
                 </p>
+                {% if event.tags %}
+                  {% for tag in event.tags.all %}
+                    <span class="badge rounded-pill">{{ tag.name }}</span>
+                  {% endfor %}
+                {% endif %}
             </div>
           </div>
         </div>

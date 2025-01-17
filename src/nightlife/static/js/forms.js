@@ -14,6 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
         input.classList.add("form-check-input");
     })
 
+    var selects = document.querySelectorAll('select');
+    selects.forEach(function (input) {
+        input.classList.add("form-select");
+    })
+
     document.getElementById('id_starts').type = 'datetime-local';
     document.getElementById('id_ends').type = 'datetime-local';
 

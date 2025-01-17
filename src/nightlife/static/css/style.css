@@ -57,6 +57,12 @@ a:active {
     object-fit: cover;
 }
 
+.badge {
+    background-color: #f8f9fa !important;
+    color: black !important;
+    font-weight: normal;
+}
+
 .headline a > h5, .headline p {
     display: inline-block;
 }
