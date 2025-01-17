@@ -52,50 +52,7 @@
       </div>
       <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for event in events.best_events_of_the_week %}
-          <div class="col">
-            <div class="card h-100">
-              {% if event.thumbnail %}
-                <a href="{% url 'events:event' slug=event.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
-              {% else %}
-                <a href="{% url 'events:event' slug=event.slug %}"><div class="card-img-top img-fluid"></div></a>
-              {% endif %}
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <div class="headline">
-                      <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
-                      {% if event.is_sponsored %}
-                        <p class="fw-lighter fst-italic">- Sponsorisé</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="col-2">
-                    <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
-                      {% csrf_token %}
-
-                      {% if request.user not in event.interested.all %}
-                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
-                      {% else %}
-                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
-                      {% endif %}
-                    </form>
-                  </div>
-                </div>
-                <div class="row">
-                  <p class="card-text">{{ event.location }}</p>
-                  <p class="card-text">
-                    <small class="text-body-secondary">
-                      {{ event.starts }} |{% if event.price %}
-                        {{ event.price }}€
-                      {% else %}
-                        GRATUIT
-                      {% endif %}
-                    </small>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% include 'events/event_cards.html' %}
         {% endfor %}
       </div>
       <div class="row row-padding col-6 mx-auto">
@@ -111,22 +68,7 @@
       </div>
       <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in events.favourite_artists %}
-          <div class="col">
-            <a href="{% url 'artists:artist' slug=artist.slug %}">
-              <div class="row container-circle">
-                <div class="circle">
-                  {% if artist.thumbnail %}
-                    <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
-                  {% else %}
-                    <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
-                  {% endif %}
-                </div>
-              </div>
-              <div class="row text-center name">
-                <h4>{{ artist.name }}</h4>
-              </div>
-            </a>
-          </div>
+          {% include 'artists/artist_cards.html' %}
         {% endfor %}
       </div>
       <div class="row row-padding col-6 mx-auto">
@@ -142,50 +84,7 @@
       </div>
       <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for event in events.last_events %}
-          <div class="col">
-            <div class="card h-100">
-              {% if event.thumbnail %}
-                <a href="{% url 'events:event' slug=event.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
-              {% else %}
-                <a href="{% url 'events:event' slug=event.slug %}"><div class="card-img-top img-fluid"></div></a>
-              {% endif %}
-              <div class="card-body">
-                <div class="row">
-                  <div class="col">
-                    <div class="headline">
-                      <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
-                      {% if event.is_sponsored %}
-                        <p class="fw-lighter fst-italic">- Sponsorisé</p>
-                      {% endif %}
-                    </div>
-                  </div>
-                  <div class="col-2">
-                    <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
-                      {% csrf_token %}
-
-                      {% if request.user not in event.interested.all %}
-                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
-                      {% else %}
-                        <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
-                      {% endif %}
-                    </form>
-                  </div>
-                </div>
-                <div class="row">
-                  <p class="card-text">{{ event.location }}</p>
-                  <p class="card-text">
-                    <small class="text-body-secondary">
-                      {{ event.starts }} |{% if event.price %}
-                        {{ event.price }}€
-                      {% else %}
-                        GRATUIT
-                      {% endif %}
-                    </small>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          {% include 'events/event_cards.html' %}
         {% endfor %}
       </div>
       <div class="row row-padding col-6 mx-auto">
@@ -194,35 +93,16 @@
     </div>
   </div>
 
-
   <div class="container-fluid bg-light">
     <div class="container container-section">
       <div class="row row-padding">
         <h1>Nos top créateurs</h1>
       </div>
       <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
-        {% for promoter in events.top_promoters %}
-          <div class="col">
-            <a href="{% url 'accounts:details' slug=promoter.username|slugify %}">
-              <div class="row container-circle">
-                <div class="circle">
-                  {% if promoter.thumbnail %}
-                    <img src="{{ promoter.thumbnail.url }}" alt="{{ promoter.username }}" />
-                  {% else %}
-                    <img src="{% get_media_prefix %}users/default.png" alt="{{ promoter.username }}" />
-                  {% endif %}
-                </div>
-              </div>
-              <div class="row text-center name">
-                <h4>{{ promoter.username }}</h4>
-              </div>
-            </a>
-          </div>
+        {% for artist in events.top_promoters %}
+          {% include 'artists/artist_cards.html' %}
         {% endfor %}
       </div>
     </div>
   </div>
-
-
-
 {% endblock %}

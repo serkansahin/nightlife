@@ -20,53 +20,7 @@
     </div>
     <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
       {% for event in events %}
-        <div class="col margin-bottom">
-          <div class="card h-100">
-            {% if event.thumbnail %}
-              <a href="{% url 'events:event' slug=event.slug %}"><img src="{{ event.thumbnail.url }}" class="card-img-top img-fluid" alt="{{ event.title }}" /></a>
-            {% else %}
-              <a href="{% url 'events:event' slug=event.slug %}"><div class="card-img-top img-fluid"></div></a>
-            {% endif %}
-            <div class="card-body">
-              <div class="row">
-                <div class="col">
-                  <div class="headline">
-                    <a href="{% url 'events:event' slug=event.slug %}"><h5 class="card-title">{{ event.title|title }}</h5></a>
-                    {% if event.is_sponsored %}
-                      <p class="fw-lighter fst-italic">- Sponsorisé</p>
-                    {% endif %}
-                  </div>
-                </div>
-                <div class="col-2">
-                  <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
-                    {% csrf_token %}
-
-                    {% if request.user not in event.interested.all %}
-                      <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart"></i></button>
-                    {% else %}
-                      <button type="submit" value="{{ event.slug }}" class="btn btn"><i class="bi bi-bookmark-heart-fill"></i></button>
-                    {% endif %}
-                  </form>
-                </div>
-              </div>
-                <p class="card-text">{{ event.location }}</p>
-                <p class="card-text">
-                  <small class="text-body-secondary">
-                    {{ event.starts }} |{% if event.price %}
-                      {{ event.price }}€
-                    {% else %}
-                      GRATUIT
-                    {% endif %}
-                  </small>
-                </p>
-                {% if event.tags %}
-                  {% for tag in event.tags.all %}
-                    <span class="badge rounded-pill">{{ tag.name }}</span>
-                  {% endfor %}
-                {% endif %}
-            </div>
-          </div>
-        </div>
+        {% include "events/event_cards.html" %}
       {% endfor %}
     </div>
   </div>

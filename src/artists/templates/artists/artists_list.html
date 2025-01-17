@@ -6,13 +6,15 @@
 {% endblock %}
 
 {% block content %}
-<div class="container breadcrumbs-section">
-  <nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-      <li class="breadcrumb-item"><a href="{% url 'home' %}">Accueil</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Les artistes</li>
-    </ol>
-  </nav>
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Les artistes</li>
+      </ol>
+    </nav>
     <div class="row text-center">
       <h1>La liste des artistes</h1><p>(A-Z)</p>
     </div>
@@ -22,22 +24,7 @@
     {% if artists %}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in artists %}
-          <div class="col row-padding">
-            <a href="{% url 'artists:artist' slug=artist.slug %}">
-              <div class="row container-circle">
-                <div class="circle">
-                  {% if artist.thumbnail %}
-                    <img src="{{ artist.thumbnail.url }}" alt="{{ artist.title }}" />
-                  {% else %}
-                    <img src="{% get_media_prefix %}users/default.png" alt="{{ artist.title }}" />
-                  {% endif %}
-                </div>
-              </div>
-              <div class="row text-center name">
-                <h4>{{ artist.name }}</h4>
-              </div>
-            </a>
-          </div>
+          {% include 'artist/artist_cards.html' %}
         {% endfor %}
       </div>
     {% else %}
