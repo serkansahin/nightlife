@@ -6,7 +6,13 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container container-section">
+<div class="container breadcrumbs-section">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Accueil</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Les artistes</li>
+    </ol>
+  </nav>
     <div class="row text-center">
       <h1>La liste des artistes</h1><p>(A-Z)</p>
     </div>

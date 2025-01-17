@@ -6,13 +6,23 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container container-section">
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'accounts:details' slug=user.slug %}">{{ user.username }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Mes artistes suivi(e)s</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
     <div class="row text-center">
       <h1>Mes artistes suivi(e)s</h1><p>(A-Z)</p>
     </div>
-  </div>
-
-  <div class="container">
     {% if user.fan %}
       <div class="row row-padding">
         {% for artist in user.fan.all %}

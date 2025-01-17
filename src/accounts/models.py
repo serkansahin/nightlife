@@ -99,4 +99,4 @@ class CustomUser(AbstractBaseUser):
     
     #Définir la redirection
     def get_absolute_url(self):
-        return reverse("accounts:userdetails", kwargs={"slug": self.slug})
+        return reverse("accounts:details", kwargs={"slug": self.slug})

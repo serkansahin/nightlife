@@ -1,21 +1,38 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Modifier mon profil</title>
+  <title>Modifier mon profil</title>
 {% endblock %}
 
 {% block content %}
-<div class="container">
-    <div class="row text-center">
-        
-        <h1>Modifier mon profil</h1>
-    
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Modifier mon profil" class="btn btn-submit">
-        </form>
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'accounts:details' slug=user.slug %}">{{ user.username }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Modifier mon profil</li>
+      </ol>
+    </nav>
+  </div>
 
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center">Modifier mon profil</h1>
     </div>
-</div>
+    <div class="row row-padding col-8 mx-auto">
+      <div class="col">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">{{ form }}</div>
+          <div class="row row-padding">
+            <input type="submit" role="button" value="Modifier mon profil" class="btn btn-submit btn-light" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -12,7 +12,15 @@
     {% endif %}
   </div>
 
-  <div class="container container-section">
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Accueil</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ user.username }}</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
     <div class="row text-center">
       <div class="col">
         <h1>{{ user.username }}</h1>

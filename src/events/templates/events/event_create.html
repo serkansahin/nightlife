@@ -1,28 +1,38 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Créer un évènement</title>
+  <title>Créer un évènement</title>
 {% endblock %}
 
 {% block content %}
-<div class="container container-section">
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'events:list' %}">Les évènements</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Créer un évènement</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
     <div class="row">
       <h1 class="text-center">Créer un évènement</h1>
     </div>
-  </div>
-  <div class="container container-section">
+
     <div class="row row-padding col-8 mx-auto">
-        <div class="col">
-            <form method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="row">
-                {{ form }}
-                </div>
-                <div class="row row-padding">
-                  <input type="submit" role="button" value="Créer" class="btn btn-submit btn-light">
-                </div>
-            </form>
-        </div>
+      <div class="col">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">{{ form }}</div>
+          <div class="row row-padding">
+            <input type="submit" role="button" value="Créer" class="btn btn-submit btn-light" />
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 {% endblock %}

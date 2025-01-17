@@ -5,6 +5,15 @@
 {% endblock %}
 
 {% block content %}
+<div class="container breadcrumbs-section">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{% url 'home' %}">Accueil</a></li>
+      <li class="breadcrumb-item"><a href="{% url 'accounts:details' slug=user.slug %}">{{ user.username }}</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Supprimer mon profil</li>
+    </ol>
+  </nav>
+</div>
   <div class="container container-section">
     <div class="row">
       <h1 class="text-center">Supprimer mon compte</h1>

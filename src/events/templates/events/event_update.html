@@ -1,16 +1,31 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Editer l'évènement: {{ event.title }}</title>
+  <title>Editer: {{ event.title }}</title>
 {% endblock %}
 
 {% block content %}
-  <div class="container container-section">
-    <div class="row">
-      <h1 class="text-center">Editer l'évènement: {{ event.title }}</h1>
-    </div>
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'events:list' %}">Les évènements</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'events:event' slug=event.slug %}">{{ event.title }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Editer</li>
+      </ol>
+    </nav>
   </div>
-  <div class="container container-section">
+  <div class="container">
+    <div class="row">
+      <h1 class="text-center">{{ event.title }}</h1>
+    </div>
+
     <div class="row row-padding col-8 mx-auto">
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}

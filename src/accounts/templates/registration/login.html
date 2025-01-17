@@ -6,11 +6,22 @@
 {% endblock %}
 
 {% block content %}
-  <div class="container container-section text-center">
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Connexion</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
     <div class="row">
-      <h1>Espace de connexion</h1>
+      <h1 class="text-center">Espace de connexion</h1>
     </div>
   </div>
+
   <div class="container-fluid bg-light">
     <div class="container container-section text-center">
       <div class="row row-padding col-8 mx-auto">

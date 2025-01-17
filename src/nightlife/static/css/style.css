@@ -16,6 +16,10 @@ body {
     padding: 50px 0;
 }
 
+.breadcrumbs-section {
+    padding: 20px 0;
+}
+
 
 .justify {
     text-align: justify !important;
@@ -43,6 +47,9 @@ a:active {
     background:rgba(0,0,0,0.6);
 }
 
+.margin-bottom {
+    margin-bottom: 20px;
+}
 
 .card-img-top {
     width: 100%;

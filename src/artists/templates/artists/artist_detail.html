@@ -12,11 +12,25 @@
     {% endif %}
   </div>
 
-  <div class="container container-section">
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'artists:list' %}">Les artistes</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">{{ artist.name }}</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="container">
     <div class="row text-center">
       <h1>{{ artist.name }}</h1>
     </div>
-    <div class="row text-center">
+    <div class="row row-padding text-center">
       {% if artist.spotify %}
         <div class="col">
           <a href="{{ artist.spotify }}"><img src="{% get_media_prefix %}icons/spotify.png" alt="Spotify de {{ artist.name }}" width="30" height="30" /></a>
@@ -39,7 +53,7 @@
       {% endif %}
     </div>
 
-    <div class="row">
+    <div class="row row-padding">
       <div class="col d-grid">
         <a class="btn btn-light" href="{% url 'artists:edit' slug=artist.slug %}" role="button">Éditer</a>
       </div>
