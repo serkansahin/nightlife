@@ -91,7 +91,8 @@ def EventInterestedView(request, slug):
 def Search(request):
     if request.method == 'POST':
         search_query = request.POST['search_query']
-        events = Event.objects.filter(title__istartswith=search_query)
-        return render(request, "events/search_results.html", {'search_query': search_query, 'events': events})
+        events = Event.objects.filter(title__icontains=search_query)
+        artists = Artist.objects.filter(name__icontains=search_query)
+        return render(request, "events/search_results.html", {'search_query': search_query, 'events': events, 'artists': artists})
     else:
         return render(request, "events/search_results.html")
