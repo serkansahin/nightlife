@@ -49,10 +49,16 @@
           </div>
         {% endif %}
         {% if not events and not artists %}
-          <h2 class="text-center">Désolé, résultat trouvé! Veuillez effectuer une nouvelle recherche</h2>
+          <h2 class="text-center">Désolé, aucun résultat trouvé !</h2>
+          <div class="row row-padding col-6 mx-auto">
+            <a class="btn btn-light" href="{% url 'home' %}" role="button">Retour à la page d'accueil</a>
+          </div>
         {% endif %}
       {% else %}
         <h2 class="text-center">Veuillez saisir votre recherche dans la barre ci-dessus</h2>
+        <div class="row row-padding col-6 mx-auto">
+          <a class="btn btn-light" href="{% url 'home' %}" role="button">Retour à la page d'accueil</a>
+        </div>
       {% endif %}
     </div>
   </div>
