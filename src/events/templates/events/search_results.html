@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Résultats de recherche:</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          {% if search_query %}
+            Résultats de la recherche: "{{ search_query }}"
+          {% else %}
+            Erreur de recherche
+          {% endif %}
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container container-section">
+    <div class="row">
+      {% if search_query %}
+        <h1 class="text-center">Résultats de la recherche: "{{ search_query }}"</h1>
+      {% else %}
+        <h1 class="text-center">Erreur de recherche</h1>
+      {% endif %}
+    </div>
+
+    <div class="row row-padding">
+      {% if search_query %}
+        {% if events %}
+          <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
+            {% for event in events %}
+              {% include 'events/event_cards.html' %}
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="row">
+            <h2 class="text-center">Désolé, résultat trouvé! Veuillez effectuer une nouvelle recherche</h2>
+          </div>
+        {% endif %}
+      {% else %}
+        <h2 class="text-center">Veuillez saisir votre recherche dans la barre ci-dessus</h2>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

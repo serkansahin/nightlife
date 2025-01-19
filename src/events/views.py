@@ -86,3 +86,12 @@ def EventInterestedView(request, slug):
         event.interested.add(request.user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+
+def Search(request):
+    if request.method == 'POST':
+        search_query = request.POST['search_query']
+        events = Event.objects.filter(title__istartswith=search_query)
+        return render(request, "events/search_results.html", {'search_query': search_query, 'events': events})
+    else:
+        return render(request, "events/search_results.html")
