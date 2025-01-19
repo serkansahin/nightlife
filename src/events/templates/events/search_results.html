@@ -22,15 +22,15 @@
     </nav>
   </div>
   <div class="container container-section">
-    <div class="row row-padding">
+    <div class="row margin-bottom text-center">
       {% if search_query %}
-        <h1 class="text-center">Résultats de la recherche: "{{ search_query }}"</h1>
+        <h1>Résultats de la recherche: "{{ search_query }}"</h1>
       {% else %}
-        <h1 class="text-center">Erreur de recherche</h1>
+        <h1>Erreur de recherche</h1>
       {% endif %}
     </div>
 
-    <div class="row row-padding">
+    <div class="row row-padding"><div class="row ">
       {% if search_query %}
         {% if events %}
           <h2 class="text-center">Évènements:</h2>

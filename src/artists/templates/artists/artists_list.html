@@ -15,12 +15,12 @@
         <li class="breadcrumb-item active" aria-current="page">Les artistes</li>
       </ol>
     </nav>
-    <div class="row text-center">
-      <h1>La liste des artistes</h1><p>(A-Z)</p>
-    </div>
   </div>
 
   <div class="container">
+    <div class="row margin-bottom text-center">
+      <h1>La liste des artistes</h1><p>(A-Z)</p>
+    </div>
     {% if artists %}
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in artists %}

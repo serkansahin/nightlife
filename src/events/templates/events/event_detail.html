@@ -25,7 +25,7 @@
     </nav>
   </div>
   <div class="container container">
-    <div class="row text-center">
+    <div class="row margin-bottom text-center">
       <div class="col">
         <h1>{{ event.title|upper }}</h1>
         <a href="{% url 'accounts:details' slug=event.author.username|slugify %}"><p>Par {{ event.author.username }}</p></a>
@@ -85,13 +85,13 @@
         </small>
       </p>
       {% if event.tags.all %}
-      <div class="margin-bottom">
-        <h5>
-          {% for tag in event.tags.all %}
-            <span class="badge rounded-pill">{{ tag.name }}</span>
-          {% endfor %}
-        </h5>
-      </div>
+        <div class="margin-bottom">
+          <h5>
+            {% for tag in event.tags.all %}
+              <span class="badge rounded-pill">{{ tag.name }}</span>
+            {% endfor %}
+          </h5>
+        </div>
       {% endif %}
       <h3>Description</h3>
       <p>{{ event.content|safe|linebreaks }}</p>
