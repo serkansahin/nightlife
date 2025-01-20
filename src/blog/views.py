@@ -21,7 +21,7 @@ class BlogPostList(ListView):
     template_name = "blog/blog_list.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('created_on')
+        queryset = super().get_queryset().order_by('-created_on')
 
         return queryset.filter(published=True)
 
