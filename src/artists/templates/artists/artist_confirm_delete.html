@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Supprimer: {{ event.title }}</title>
+  <title>Supprimer: {{ artist.name }}</title>
 {% endblock %}
 
 {% block content %}
@@ -12,10 +12,10 @@
           <a href="{% url 'home' %}">Accueil</a>
         </li>
         <li class="breadcrumb-item">
-          <a href="{% url 'blog:list' %}">Le blog</a>
+          <a href="{% url 'artists:list' %}">Les artistes</a>
         </li>
         <li class="breadcrumb-item">
-          <a href="{% url 'blog:post' slug=post.slug %}">{{ post.title }}</a>
+          <a href="{% url 'artists:artist' slug=artist.slug %}">{{ artist.name }}</a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Supprimer</li>
       </ol>
@@ -24,16 +24,16 @@
 
   <div class="container">
     <div class="row margin-bottom text-center">
-      <h1 class="text-center">Supprimer "{{ post.title }}"</h1>
+      <h1 class="text-center">Supprimer {{ artist.name }}</h1>
     </div>
 
     <div class="row row-padding col-8 mx-auto text-center">
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>Êtes-vous sûr de vouloir supprimer "{{ post.title }}" ?</h3>
+        <h3>Êtes-vous sûr de vouloir supprimer {{ artist.name }} ?</h3>
         <div class="row">{{ form }}</div>
         <div class="row row-padding">
-          <input type="submit" value='Supprimer "{{ post.title }}"' class="btn btn-danger" />
+          <input type="submit" value="Supprimer {{ artist.name }}" class="btn btn-danger" />
         </div>
       </form>
     </div>
