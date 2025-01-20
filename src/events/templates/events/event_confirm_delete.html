@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Supprimer mon profil</title>
+  <title>Supprimer: {{ event.title }}</title>
 {% endblock %}
 
 {% block content %}
@@ -12,25 +12,28 @@
           <a href="{% url 'home' %}">Accueil</a>
         </li>
         <li class="breadcrumb-item">
-          <a href="{% url 'accounts:details' slug=user.slug %}">{{ user.username }}</a>
+          <a href="{% url 'events:list' %}">Les évènements</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Supprimer mon profil</li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'events:event' slug=event.slug %}">{{ event.title }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Supprimer</li>
       </ol>
     </nav>
   </div>
 
   <div class="container">
     <div class="row margin-bottom text-center">
-      <h1 class="text-center">Supprimer mon profil</h1>
+      <h1 class="text-center">Supprimer {{ event.title }}</h1>
     </div>
 
     <div class="row row-padding col-8 mx-auto text-center">
       <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <h3>Êtes-vous sûr de vouloir nous quitter {{ user.username }} ?</h3>
+        <h3>Êtes-vous sûr de vouloir supprimer {{ event.title }} ?</h3>
         <div class="row">{{ form }}</div>
         <div class="row row-padding">
-          <input type="submit" value="Supprimer mon compte" class="btn btn-danger" />
+          <input type="submit" value="Supprimer {{ event.title }}" class="btn btn-danger" />
         </div>
       </form>
     </div>
