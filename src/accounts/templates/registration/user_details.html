@@ -52,14 +52,14 @@
     </div>
   </div>
 
-  {% if user.author %}
+  {% if user.promoter %}
     <div class="container-fluid bg-dark">
       <div class="container container-section">
         <div class="row row-padding">
           <h1 class="text-light">Évènements à venir</h1>
         </div>
         <div class="row row-padding row-cols-1 row-cols-md-4 g-4">
-          {% for event in user.author.all %}
+          {% for event in user.promoter.all %}
             {% include 'events/event_cards.html' %}
           {% endfor %}
         </div>

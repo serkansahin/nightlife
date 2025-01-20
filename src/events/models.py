@@ -30,17 +30,16 @@ class Event(models.Model):
     ends = models.DateTimeField(verbose_name="Date de fin")
     published = models.BooleanField(default=False, verbose_name="Publié")
     is_sponsored = models.BooleanField(default=False, verbose_name="Sponsorisé")
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="author")
+    promoter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="promoter")
     location = models.CharField(max_length=255, null=True, blank=True, verbose_name="Localisation")
     address = models.CharField(max_length=255, null=True, blank=True, verbose_name="Adresse")
     town = models.CharField(max_length=255, null=True, blank=True, verbose_name="Ville")
     price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True, verbose_name="Prix")
-    date = models.DateTimeField(blank=True, null=True)
     content = models.TextField(blank=True, verbose_name="Contenu")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
     artists = models.ManyToManyField(Artist, related_name="events")
     interested = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="interested")
-    tags = models.ManyToManyField(Tag, related_name='tags')
+    tags = models.ManyToManyField(Tag, related_name='event_tags')
 
     class meta:
         ordering = ["-created-on"]

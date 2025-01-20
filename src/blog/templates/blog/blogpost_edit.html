@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Editer {{ post.title }}</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'blog:list' %}">Le blog</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'blog:post' slug=post.slug %}">{{ post.title|title }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Editer</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="container">
+    <div class="row margin-bottom text-center">
+      <h1>{{ post.title }}</h1>
+    </div>
+
+    <div class="row row-padding col-8 mx-auto">
+      <div class="col">
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">{{ form }}</div>
+          <div class="row row-padding">
+            <input type="submit" role="button" value="Créer" class="btn btn-submit btn-light" />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

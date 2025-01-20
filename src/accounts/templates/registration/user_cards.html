@@ -1,0 +1,17 @@
+{% load static %}
+<div class="col row-padding">
+  <a href="{% url 'accounts:details' slug=user.slug %}">
+    <div class="row container-circle">
+      <div class="circle">
+        {% if user.thumbnail %}
+          <img src="{{ user.thumbnail.url }}" alt="{{ user.name }}" />
+        {% else %}
+          <img src="{% get_media_prefix %}users/default.png" alt="{{ user.username }}" />
+        {% endif %}
+      </div>
+    </div>
+    <div class="row text-center name">
+      <h4>{{ user.username }}</h4>
+    </div>
+  </a>
+</div>

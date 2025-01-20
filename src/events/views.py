@@ -26,7 +26,7 @@ class Home(ListView):
         queryset = {'best_events_of_the_week': Event.objects.filter(starts__week=current_week, published = True).annotate(interested_count=Count('interested')).order_by('-interested_count')[:4],
                     'favourite_artists': Artist.objects.annotate(followers_count=Count('followers')).order_by('-followers_count')[:4],
                     'last_events': Event.objects.filter(published = True).order_by('-created_on')[:4],
-                    'top_promoters': CustomUser.objects.annotate(events_count=Count('author')).order_by('-events_count')[:4]}
+                    'top_promoters': CustomUser.objects.annotate(events_count=Count('promoter')).order_by('-events_count')[:4]}
 
         return queryset
 
@@ -37,7 +37,7 @@ class EventsList(ListView):
     template_name = "events/event_list.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('date')
+        queryset = super().get_queryset().order_by('starts')
 
         #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
         if self.request.user.is_authenticated:
@@ -52,7 +52,7 @@ class EventCreate(CreateView):
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
-            form.instance.author = self.request.user
+            form.instance.promoter = self.request.user
         
         form.instance.created_on = datetime.datetime.now()
         

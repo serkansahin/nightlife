@@ -28,7 +28,7 @@
     <div class="row margin-bottom text-center">
       <div class="col">
         <h1>{{ event.title|upper }}</h1>
-        <a href="{% url 'accounts:details' slug=event.author.username|slugify %}"><p>Par {{ event.author.username }}</p></a>
+        <a href="{% url 'accounts:details' slug=event.promoter.username|slugify %}"><p>Par {{ event.promoter.username }}</p></a>
       </div>
     </div>
     <div class="row">
@@ -84,7 +84,7 @@
           {% endif %}
         </small>
       </p>
-      {% if event.tags.all %}
+      {% if event.tags %}
         <div class="margin-bottom">
           <h5>
             {% for tag in event.tags.all %}

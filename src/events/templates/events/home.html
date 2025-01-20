@@ -99,8 +99,8 @@
         <h1>Nos top créateurs</h1>
       </div>
       <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
-        {% for artist in events.top_promoters %}
-          {% include 'artists/artist_cards.html' %}
+        {% for user in events.top_promoters %}
+          {% include 'registration/user_cards.html' %}
         {% endfor %}
       </div>
     </div>
