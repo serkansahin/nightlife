@@ -15,6 +15,7 @@ from django.utils.decorators import method_decorator
 from accounts.models import CustomUser
 from artists.models import Artist
 from events.models import Event
+from blog.models import BlogPost
 
 class Home(ListView):
     model = Event
@@ -23,7 +24,8 @@ class Home(ListView):
 
     def get_queryset(self):
         current_week = datetime.date.today().isocalendar()[1] 
-        queryset = {'best_events_of_the_week': Event.objects.filter(starts__week=current_week, published = True).annotate(interested_count=Count('interested')).order_by('-interested_count')[:4],
+        queryset = {'featured_articles': BlogPost.objects.filter(is_featured = True).order_by('-created_on')[:4],
+                    'best_events_of_the_week': Event.objects.filter(starts__week=current_week, published = True).annotate(interested_count=Count('interested')).order_by('-interested_count')[:4],
                     'favourite_artists': Artist.objects.annotate(followers_count=Count('followers')).order_by('-followers_count')[:4],
                     'last_events': Event.objects.filter(published = True).order_by('-created_on')[:4],
                     'top_promoters': CustomUser.objects.annotate(events_count=Count('promoter')).order_by('-events_count')[:4]}

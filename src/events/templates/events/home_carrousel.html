@@ -1,0 +1,45 @@
+{% load static %}
+<div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    {% for article in events.featured_articles %}
+      {% if forloop.first %}
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ forloop.counter0 }}" class="active" aria-current="true"></button>
+      {% else %}
+        <button type="button" data-bs-target="#carouselExample" data-bs-slide-to="{{ forloop.counter0 }}"></button>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+
+  <div class="carousel-inner">
+
+    {% for article in events.featured_articles %}
+      {% if forloop.first %}
+        <div class="carousel-item active" data-bs-interval="10000">
+      {% else %}
+        <div class="carousel-item" data-bs-interval="2000">
+      {% endif %}
+
+        <div class="carousel-caption d-none d-md-block margin-bottom">
+            <a href="{% url 'blog:post' slug=article.slug %}">
+                <h1>{{ article.title|upper }}</h1>
+                <p>{{ article.summary|truncatewords_html:20}}</p>
+            </a>
+        </div>
+
+      {% if article.thumbnail %}
+       <img src="{{ article.thumbnail.url }}" class="d-block w-100" alt="{{ article.title }}" />
+      {% endif %}
+        </div>
+    {% endfor %}
+    </div>
+    
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>

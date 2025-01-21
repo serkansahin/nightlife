@@ -29,7 +29,7 @@ class BlogPostList(ListView):
 class BlogPostCreate(CreateView):
     model = BlogPost
     template_name = "blog/blogpost_create.html"
-    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_homepage_displayed']
+    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_featured']
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
