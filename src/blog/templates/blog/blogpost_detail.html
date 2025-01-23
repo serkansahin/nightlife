@@ -29,6 +29,14 @@
   <div class="container">
     <div class="row margin-bottom text-center">
       <h1>{{ post.title|upper }}</h1>
+      <span>
+        <p>
+          Par {{ post.author }} <small>- le {{ post.created_on }}</small>
+          {% if post.created_on != post.last_updated %}
+            <small><i>(Mis à jour le {{ post.last_updated }})</i></small>
+          {% endif %}
+        </p>
+      </span>
     </div>
 
     <div class="row row-padding">

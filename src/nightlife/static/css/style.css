@@ -80,17 +80,15 @@ a:active {
 
 
 .container-circle {
-    /* Feel free to adjust the values here so you can see it being responsive */
     width: 200px;
     margin-left: auto;
     margin-right: auto;
 }
 
-.container-circle-navbar {
+.dropdown, .dropdown-toggle, .container-circle-navbar {
     /* Feel free to adjust the values here so you can see it being responsive */
     width: 32px;
-    margin-left: auto;
-    margin-right: auto;
+    height: 32px;
 }
 
 .circle {

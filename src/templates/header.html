@@ -21,11 +21,15 @@
       {% if request.user.is_authenticated %}
         <div class="dropdown">
           <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+            <div class="container-circle container-circle-navbar">
+              <div class="circle">
             {% if request.user.thumbnail %}
-              <img src="{{ user.thumbnail.url }}" alt="{{ request.user }}" width="32" height="32" class="rounded-circle" />
+              <img src="{{ user.thumbnail.url }}" alt="{{ request.user }}"/>
             {% else %}
-              <img src="{% get_media_prefix %}users/default.png" alt="{{ request.user }}" width="32" height="32" class="rounded-circle" />
+              <img src="{% get_media_prefix %}users/default.png" alt="{{ request.user }}"/>
             {% endif %}
+              </div>
+            </div>
           </a>
           <ul class="dropdown-menu text-small" style="">
             <li class="dropdown-header">👋 {{ request.user }}</li>

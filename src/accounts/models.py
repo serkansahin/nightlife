@@ -10,7 +10,7 @@ from nightlife.methods import PathAndRename
 from events.models import Event
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, town, thumbnail, biography, password=None):
+    def create_user(self, email, username, town, thumbnail, short_bio, biography, password=None):
         if not email:
             raise ValueError("Vous devez rentrer un email")
         email = self.normalize_email(email)
@@ -19,6 +19,7 @@ class CustomUserManager(BaseUserManager):
             username=username,
             town=town,
             thumbnail=thumbnail,
+            short_bio=short_bio,
             biography=biography
             )
         user.is_promoter = False
@@ -70,6 +71,7 @@ class CustomUser(AbstractBaseUser):
     slug = models.SlugField(max_length=15, unique=True)
     town = models.CharField(max_length=30, null=True, verbose_name="Ville")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
+    short_biography = models.CharField(max_length=100, blank=True, verbose_name="Vous en quelques mots")
     biography = models.TextField(blank=True, verbose_name="Biographie")
     is_active = models.BooleanField(default=True)
     is_promoter = models.BooleanField(default=False, verbose_name="Êtes-vous organisateur ?")

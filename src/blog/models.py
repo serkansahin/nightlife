@@ -4,7 +4,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
 
-
+from datetime import date
 from events.models import Tag
 from nightlife.methods import PathAndRename
 
@@ -36,6 +36,10 @@ class BlogPost(models.Model):
             self.slug = slugify(self.title)
 
         return super().save(*args, **kwargs)
+    
+    @property
+    def is_past_due(self):
+        return date.today() > self.created_on
     
     #Définir la redirection
     def get_absolute_url(self):
