@@ -38,8 +38,12 @@ class BlogPost(models.Model):
         return super().save(*args, **kwargs)
     
     @property
-    def is_past_due(self):
-        return date.today() > self.created_on
+    def is_created_on_past_due(self):
+        return date.today() > self.created_on.date()
+    
+    @property
+    def is_last_updated_past_due(self):
+        return date.today() > self.last_updated.date()
     
     #Définir la redirection
     def get_absolute_url(self):

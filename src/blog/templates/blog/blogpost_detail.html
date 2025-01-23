@@ -31,9 +31,17 @@
       <h1>{{ post.title|upper }}</h1>
       <span>
         <p>
-          Par {{ post.author }} <small>- le {{ post.created_on }}</small>
+          Par <a href="{% url 'accounts:details' slug=post.author|slugify %}">{{ post.author }}</a> <small>| <i class="bi bi-clock"></i> {{ post.created_on|date:'d N Y' }}</small>
           {% if post.created_on != post.last_updated %}
-            <small><i>(Mis à jour le {{ post.last_updated }})</i></small>
+            <small>
+              <i>
+                (Mis à jour :{% if post.is_last_updated_past_due %}
+                  le {{ post.last_updated|date:'d N à H:i' }})
+                {% else %}
+                  à {{ post.last_updated|date:'H:i' }})
+                {% endif %}
+              </i>
+            </small>
           {% endif %}
         </p>
       </span>
@@ -48,7 +56,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row row-padding">
       {% if post.tags %}
         <div class="margin-bottom">
           <h5>
@@ -58,8 +66,13 @@
           </h5>
         </div>
       {% endif %}
-      <h3>Biographie</h3>
       <p class="justify">{{ post.content|safe|linebreaksbr }}</p>
+    </div>
+  </div>
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row row-padding"></div>
+      <div class="row row-padding"></div>
     </div>
   </div>
 {% endblock %}

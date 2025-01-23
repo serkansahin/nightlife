@@ -38,7 +38,12 @@
             {% for post in posts %}
               <tr>
                 <th scope="row">
-                  <i class="bi bi-clock"></i> {{ post.created_on|date:'d N H:i' }}
+                  <i class="bi bi-clock"></i>
+                  {% if post.is_created_on_past_due %}
+                    {{ post.created_on|date:'d N H:i' }}
+                  {% else %}
+                    {{ post.created_on|date:'H:i' }}
+                  {% endif %}
                 </th>
                 <td>
                   <a href="{% url 'blog:post' slug=post.slug %}">{{ post.title }}</a>
