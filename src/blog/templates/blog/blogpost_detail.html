@@ -31,7 +31,7 @@
       <h1>{{ post.title|upper }}</h1>
       <span>
         <p>
-          Par <a href="{% url 'accounts:details' slug=post.author|slugify %}">{{ post.author }}</a> <small>| <i class="bi bi-clock"></i> {{ post.created_on|date:'d N Y' }}</small>
+          Par <a href="{% url 'accounts:details' slug=post.author|slugify %}">{{ post.author }}</a> <small>| {{ post.created_on|date:'d N Y' }}</small>
           {% if post.created_on != post.last_updated %}
             <small>
               <i>
@@ -41,6 +41,7 @@
                   à {{ post.last_updated|date:'H:i' }})
                 {% endif %}
               </i>
+              - <i class="bi bi-clock"></i> Temps de lecture : {{ post.get_readtime }}
             </small>
           {% endif %}
         </p>
@@ -59,6 +60,7 @@
     <div class="row row-padding">
       {% if post.tags %}
         <div class="margin-bottom">
+          <small><i class="bi bi-tags-fill"></i> Tags :</small>
           <h5>
             {% for tag in post.tags.all %}
               <span class="badge rounded-pill">{{ tag.name }}</span>
@@ -69,10 +71,34 @@
       <p class="justify">{{ post.content|safe|linebreaksbr }}</p>
     </div>
   </div>
+
   <div class="container-fluid bg-light">
     <div class="container container-section">
-      <div class="row row-padding"></div>
-      <div class="row row-padding"></div>
+      <div class="row row-padding">
+        <div class="col-3">
+          <a href="{% url 'accounts:details' slug=post.author|slugify %}">
+            <div class="row container-circle">
+              <div class="circle">
+                {% if post.author.thumbnail %}
+                  <img src="{{ post.author.thumbnail.url }}" alt="{{ post.author }}" />
+                {% else %}
+                  <img src="{% get_media_prefix %}users/default.png" alt="{{ post.author }}" />
+                {% endif %}
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col d-flex align-items-center">
+          <div>
+            <div class="row row-padding name">
+              <a href="{% url 'accounts:details' slug=post.author|slugify %}"><h3>{{ post.author }}</h3></a>
+            </div>
+            <div class="row row-padding">
+              <p>"{{ post.author.short_biography }}"</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}

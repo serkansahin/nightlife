@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 from datetime import date
+import readtime
 from events.models import Tag
 from nightlife.methods import PathAndRename
 
@@ -44,6 +45,10 @@ class BlogPost(models.Model):
     @property
     def is_last_updated_past_due(self):
         return date.today() > self.last_updated.date()
+    
+    def get_readtime(self):
+      result = readtime.of_text(self.content)
+      return result.text
     
     #Définir la redirection
     def get_absolute_url(self):
