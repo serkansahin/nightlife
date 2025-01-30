@@ -1,8 +1,10 @@
 import datetime
 from django.conf import settings
 from django.db import models
+from django.forms import ValidationError
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.utils.translation import gettext_lazy as _
 
 
 from nightlife.methods import PathAndRename
@@ -18,13 +20,12 @@ class Artist(models.Model):
     is_sponsored = models.BooleanField(default=False, verbose_name="Sponsorisé")
     biography = models.TextField(blank=True, verbose_name="Biographie")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
-    spotify = models.URLField(max_length=255, blank=True)
+    spotify = models.CharField(max_length=255, blank=True)
     soundcloud = models.URLField(max_length=255, blank=True)
     instagram = models.URLField(max_length=255, blank=True)
     facebook = models.URLField(max_length=255, blank=True)
-    playlist = models.URLField(max_length=255, blank=True)
+    playlist = models.CharField(max_length=255, blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
-
 
     class meta:
         ordering = ["-created-on"]
@@ -32,6 +33,10 @@ class Artist(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def clean(self):
+        if Artist.objects.filter(name=self.name).exists():
+            raise ValidationError({'name': _('L\'artiste existe déjà.')})
     
     def save(self, *args, **kwargs):
         if not self.slug:

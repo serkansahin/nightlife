@@ -31,7 +31,7 @@
       <h1>{{ post.title|upper }}</h1>
       <span>
         <p>
-          Par <a href="{% url 'accounts:details' slug=post.author|slugify %}">{{ post.author }}</a> <small>| {{ post.created_on|date:'d N Y' }}</small>
+          Par <a href="{% url 'accounts:details' slug=post.author|slugify %}">{{ post.author }}</a> <small>| <i class="bi bi-calendar-event"></i> {{ post.created_on|date:'d N Y' }}</small>
           {% if post.created_on != post.last_updated %}
             <small>
               <i>
