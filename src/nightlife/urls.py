@@ -20,6 +20,7 @@ from django.urls import include, path
 from django.conf import settings
 from django.conf.urls.static import static
 
+from artists.views import spotify_callback
 from events import views
 from events.views import Home, Search
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path('artists/', include('artists.urls')),
     path('blog/', include('blog.urls')),
     path('search/', views.Search, name='search'),
+    path('callback/', spotify_callback, name='spotify_callback'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

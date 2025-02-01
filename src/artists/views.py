@@ -16,50 +16,68 @@ import requests
 from artists.forms import ArtistCreateForm
 from artists.models import Artist
 from events.models import Event
-from nightlife.methods import spotify_search
+from nightlife.spotify_methods import get_tokens, spotify_search, get_authorization_url, is_user_connected
+    
+# Ajoutez cette vue pour gérer le callback
+@login_required
+def spotify_callback(request):
+    code = request.GET.get('code')
 
-class ArtistsList(ListView):
-    model = Artist
-    context_object_name = "artists"
-    template_name = "artists/artists_list.html"
-
-    def get_queryset(self):
-        queryset = super().get_queryset().order_by('name')
-
-        return queryset
+    if code:
+        access_token, refresh_token = get_tokens(code)
+        if access_token:
+            # Stockez les jetons dans la session ou la base de données
+            request.session['access_token'] = access_token
+            request.session['refresh_token'] = refresh_token
+            return redirect('artists:list')
+        
+    return render(request, 'artists/error.html', {'message': 'Erreur lors de l\'authentification avec Spotify.'})
     
 @login_required
 def ArtistCreate(request):
-
     if request.method == "POST":
         form = ArtistCreateForm(request.POST)
         if form.is_valid():
-            artist = form.cleaned_data.get('name')
-            artist_search = spotify_search("artist", artist)
-            playlist_search = spotify_search("playlist", artist)
+            if not is_user_connected():
+                print("L'utilisateur n'est pas connecté. Redirection vers l'URL d'autorisation.")
+                return redirect(get_authorization_url())
+            else:
+                print("L'utilisateur est déjà connecté.")
+                # Ajoutez ici le code pour gérer les artistes sur Spotify
+                artist = form.cleaned_data.get('name')
+                artist_search = spotify_search("artist", artist)
+                playlist_search = spotify_search("playlist", artist)
 
-            new_artist = form.save(commit=False)
-            image_url = artist_search["images"][0]["url"]
-            image_response = requests.get(image_url)
+                new_artist = form.save(commit=False)
+                image_url = artist_search["images"][0]["url"]
+                image_response = requests.get(image_url)
 
-            if image_response.status_code == 200:
-                image_content = ContentFile(image_response.content)
-                new_artist.name = artist_search["name"]
-                new_artist.slug = slugify(new_artist.name)
-                new_artist.biography = form.cleaned_data.get('biography')
-                new_artist.spotify = artist_search["id"]
-                new_artist.created_on = datetime.datetime.now()
-                if playlist_search:
-                    new_artist.playlist = playlist_search["id"]
-                new_artist.thumbnail.save(f"{new_artist.name}.jpg", image_content)
-                new_artist.save()
-                return redirect('artists:artist', new_artist.slug)
-
+                if image_response.status_code == 200:
+                    image_content = ContentFile(image_response.content)
+                    new_artist.name = artist_search["name"]
+                    new_artist.slug = slugify(new_artist.name)
+                    new_artist.biography = form.cleaned_data.get('biography')
+                    new_artist.spotify = artist_search["id"]
+                    new_artist.created_on = datetime.datetime.now()
+                    if playlist_search:
+                        new_artist.playlist = playlist_search["id"]
+                    new_artist.thumbnail.save(f"{new_artist.name}.jpg", image_content)
+                    new_artist.save()
+                    return redirect('artists:artist', new_artist.slug)
     else:
         form = ArtistCreateForm()
 
     return render(request, "artists/artist_create.html", {"form": form})
 
+@login_required
+def ArtistCreateSpotifyFollowings(request):
+    if not is_user_connected():
+        print("L'utilisateur n'est pas connecté. Redirection vers l'URL d'autorisation.")
+        return redirect(get_authorization_url())
+    else:
+        print("L'utilisateur est déjà connecté.")
+        # Ajoutez ici le code pour gérer les artistes suivis sur Spotify
+        
     
 @method_decorator(login_required, name="dispatch")
 class ArtistCreateManual(CreateView):
@@ -70,6 +88,16 @@ class ArtistCreateManual(CreateView):
     def form_valid(self, form):      
         form.instance.created_on = datetime.datetime.now()
         return super().form_valid(form)
+    
+class ArtistsList(ListView):
+    model = Artist
+    context_object_name = "artists"
+    template_name = "artists/artists_list.html"
+
+    def get_queryset(self):
+        queryset = super().get_queryset().order_by('name')
+
+        return queryset
 
 @method_decorator(login_required, name="dispatch")
 class ArtistUpdate(UpdateView):
