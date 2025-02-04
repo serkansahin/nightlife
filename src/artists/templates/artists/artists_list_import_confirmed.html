@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Confirmer l'import de {{ nb_artists }} artistes suivis</title>
+{% endblock %}
+
+{% block content %}
+  <div class="container breadcrumbs-section">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="{% url 'home' %}">Accueil</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="{% url 'artists:list' %}">Les artistes</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Importer les artistes suivis</li>
+      </ol>
+    </nav>
+  </div>
+
+  <div class="container">
+    <div class="row margin-bottom text-center">
+      <h1>Import terminé</h1>
+    </div>
+    {% if posts %}
+      <div class="row row-padding margin-bottom">
+        <h5>L'import de {{ nb_artists }} artistes suivis s'est correctement déroulé</h5>
+      </div>
+      <div class="row margin-bottom">
+        <h5>Toute l'actualité</h5>
+
+        <table class="table table-hover">
+          <tbody>
+            {% for post in posts %}
+              <tr>
+                <th scope="row">
+                  <i class="bi bi-clock"></i>
+                  {% if post.is_created_on_past_due %}
+                    {{ post.created_on|date:'d N H:i' }}
+                  {% else %}
+                    {{ post.created_on|date:'H:i' }}
+                  {% endif %}
+                </th>
+                <td>
+                  <a href="{% url 'blog:post' slug=post.slug %}">{{ post.title }}</a>
+                </td>
+                {% if post.tags %}
+                  <td>
+                    {% for tag in post.tags.all %}
+                      <span class="badge rounded-pill">{{ tag.name }}</span>
+                    {% endfor %}
+                  </td>
+                {% endif %}
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <div class="col">
+        <div class="row row-padding text-center">
+          <h2>Pas d'articles pour le moment !</h2>
+        </div>
+      </div>
+    {% endif %}
+    <div class="row row-padding col-6 mx-auto">
+      <a class="btn btn-light" href="{% url 'blog:create' %}" role="button">Ajouter un article</a>
+    </div>
+  </div>
+{% endblock %}

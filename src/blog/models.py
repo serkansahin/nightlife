@@ -25,8 +25,8 @@ class BlogPost(models.Model):
     tags = models.ManyToManyField(Tag, related_name='blogpost_tags')
 
 
-    class meta:
-        ordering = ["-created-on"]
+    class Meta:
+        ordering = ["-created_on"]
         verbose_name = "Article"
 
     def __str__(self):

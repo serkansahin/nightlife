@@ -10,50 +10,42 @@ from nightlife.methods import PathAndRename
 from events.models import Event
 
 class CustomUserManager(BaseUserManager):
-    def create_user(self, email, username, town, thumbnail, short_bio, biography, password=None):
+    def create_user(self, email, username, password=None):
         if not email:
             raise ValueError("Vous devez rentrer un email")
+        if not username:
+            raise ValueError('Vous devez rentrer un pseudo')
         email = self.normalize_email(email)
         user = self.model(
             email=email,
             username=username,
-            town=town,
-            thumbnail=thumbnail,
-            short_bio=short_bio,
-            biography=biography
             )
-        user.is_promoter = False
         user.set_password(password)
         user.save()
         return user
     
-    def create_promoter(self, email, username, town, thumbnail, biography, password=None):
+    def create_promoter(self, email, username, password=None):
         if not email:
             raise ValueError("Vous devez rentrer un email")
-        email = self.normalize_email(email)
-        user = self.model(
-            email=email,
-            username=username,
-            town=town,
-            thumbnail=thumbnail,
-            biography=biography,
-            )
-        user.is_promoter = True
-        user.set_password(password)
-        user.save()
-        return user
-    
-    def create_superuser(self, email, username, town, thumbnail, password=None):
         email = self.normalize_email(email)
         user = self.create_user(
             email=email,
             username=username,
-            town=town,
-            thumbnail=thumbnail,
-            password=password
+        )
+        user.is_promoter = True
+        user.set_password(password)
+        user.save()
+        return user
+    
+    def create_superuser(self, email, username, password=None):
+        
+        user = self.create_user(
+            email = self.normalize_email(email),
+            username=username,
         )
         user.is_admin = True
         user.is_promoter = True
+        user.set_password(password)
         user.save()
         return user
 
@@ -78,7 +70,7 @@ class CustomUser(AbstractBaseUser):
     is_admin = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = [email, username]
+    REQUIRED_FIELDS = ['username']
     objects = CustomUserManager()
 
     @property

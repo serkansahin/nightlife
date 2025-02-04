@@ -6,12 +6,12 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
-
 from nightlife.methods import PathAndRename
 
 # Create your models here.
 class Artist(models.Model):
     path_and_rename = PathAndRename("artists/")
+    
     name = models.CharField(max_length=255, unique=True, verbose_name="Nom de l'artiste")
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     created_on = models.DateTimeField(blank=True, null=True)
@@ -26,17 +26,20 @@ class Artist(models.Model):
     facebook = models.URLField(max_length=255, blank=True)
     playlist = models.CharField(max_length=255, blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
+    tags = models.ManyToManyField("events.Tag", related_name='artist_tags')
 
     class meta:
-        ordering = ["-created-on"]
+        ordering = ["-created_on"]
         verbose_name = "Artiste"
 
     def __str__(self):
         return self.name
     
     def clean(self):
-        if Artist.objects.filter(name=self.name).exists():
-            raise ValidationError({'name': _('L\'artiste existe déjà.')})
+        #Lancer le contrôle de la présence de l'artiste que sur le create
+        if not self.pk:
+            if Artist.objects.filter(name=self.name).exists():
+                raise ValidationError({'name': _('L\'artiste existe déjà.')})
     
     def save(self, *args, **kwargs):
         if not self.slug:

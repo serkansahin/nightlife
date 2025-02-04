@@ -11,14 +11,20 @@ from nightlife.methods import PathAndRename
 # Create your models here.
 class Tag(models.Model):
     name = models.CharField(max_length=255, unique=True, verbose_name="tag")
+    slug = models.SlugField(max_length=255, unique=True)
 
-    class meta:
+    class Meta:
         ordering = ["name"]
     
     def __str__(self):
         return self.name
     
-
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+ 
+        return super().save(*args, **kwargs)
+    
 class Event(models.Model):
     path_and_rename = PathAndRename("events/")
 
@@ -26,8 +32,8 @@ class Event(models.Model):
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     created_on = models.DateTimeField(blank=True, null=True)
     last_updated = models.DateTimeField(auto_now=True)
-    starts = models.DateTimeField(verbose_name="Date de début")
-    ends = models.DateTimeField(verbose_name="Date de fin")
+    starts = models.DateTimeField(verbose_name="Début")
+    ends = models.DateTimeField(verbose_name="Fin")
     published = models.BooleanField(default=False, verbose_name="Publié")
     is_sponsored = models.BooleanField(default=False, verbose_name="Sponsorisé")
     promoter = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name="promoter")
@@ -39,10 +45,10 @@ class Event(models.Model):
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
     artists = models.ManyToManyField(Artist, related_name="events")
     interested = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="interested")
-    tags = models.ManyToManyField(Tag, related_name='event_tags')
+    tags = models.ManyToManyField(Tag, related_name='event_tags', blank=True)
 
     class meta:
-        ordering = ["-created-on"]
+        ordering = ["-created_on"]
         verbose_name = "Event"
 
     def __str__(self):
@@ -60,4 +66,3 @@ class Event(models.Model):
 
     def total_interested(self):
         return self.interested.count()
-   

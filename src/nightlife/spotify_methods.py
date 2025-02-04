@@ -44,6 +44,7 @@ def get_tokens(auth_code):
         return access_token, refresh_token
     else:
         print(f"Error: {response.status_code}")
+        print(f"Response content: {response.content}")
         return None, None
 
 def refresh_access_token():
@@ -63,19 +64,27 @@ def refresh_access_token():
         return access_token
     else:
         print(f"Error: {response.status_code}")
+        print(f"Response content: {response.content}")
         return None
     
 def get_auth_headers(token):
-    return {"Authorization": "Bearer "+ token}
+    return {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json'
+    }
 
 def spotify_search(search_type, search_query):
     global access_token
+    if is_user_connected() is not True:
+        get_authorization_url
+        access_token = refresh_access_token()
+
     url = 'https://api.spotify.com/v1/search'
     headers = get_auth_headers(access_token)
     params = {
         'q': search_query,
         'type': search_type,
-        'limit': 1,
+        'limit': 50,
         'offset': 0
     }
     response = requests.get(url, headers=headers, params=params)
@@ -88,3 +97,48 @@ def spotify_search(search_type, search_query):
         return json_result[0]
     else:
         print(f"Error: {response.status_code}")
+
+def user_get_followed_artists():
+    global access_token
+    if not is_user_connected():
+        access_token = refresh_access_token()
+    
+    AFTER = ""
+    url = 'https://api.spotify.com/v1/me/following'
+    headers = get_auth_headers(access_token)
+    params = {
+        'type': 'artist',
+        'after': AFTER,
+        'limit': 50,
+    }
+    
+    all_artists = []
+    
+    while True:
+        response = requests.get(url, headers=headers, params=params)
+        
+        # Debugging: print headers and params
+        print(f"Headers: {headers}")
+        print(f"Params: {params}")
+        print(f"Response status code: {response.status_code}")
+        print(f"Response content: {response.content}")
+
+        if response.status_code == 200:
+            response_json = response.json()
+            artists = response_json["artists"]["items"]
+            all_artists.extend(artists)
+            
+            AFTER = response_json["artists"]["cursors"]["after"]
+            if not AFTER:
+                break
+            params['after'] = AFTER
+        else:
+            print(f"Error: {response.status_code}")
+            print(f"Response content: {response.content}")
+            return None
+    
+    if len(all_artists) == 0:
+        print("Nothing found")
+        return None
+    
+    return all_artists
