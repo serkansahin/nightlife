@@ -33,22 +33,22 @@
     <div class="row row-padding text-center">
       {% if artist.spotify %}
         <div class="col">
-          <a href="https://open.spotify.com/intl-fr/artist/{{ artist.spotify }}"><img src="{% get_media_prefix %}icons/spotify.png" alt="Spotify de {{ artist.name }}" width="30" height="30" /></a>
+          <a href="https://open.spotify.com/intl-fr/artist/{{ artist.spotify }}"><img src="{% get_media_prefix %}commons/icons/spotify.png" alt="Spotify de {{ artist.name }}" width="30" height="30" /></a>
         </div>
       {% endif %}
       {% if artist.soundcloud %}
         <div class="col">
-          <a href="{{ artist.soundcloud }}"><img src="{% get_media_prefix %}icons/soundcloud.png" alt="Soundcloud de {{ artist.name }}" width="30" height="30" /></a>
+          <a href="{{ artist.soundcloud }}"><img src="{% get_media_prefix %}commons/icons/soundcloud.png" alt="Soundcloud de {{ artist.name }}" width="30" height="30" /></a>
         </div>
       {% endif %}
       {% if artist.instagram %}
         <div class="col">
-          <a href="{{ artist.instagram }}"><img src="{% get_media_prefix %}icons/instagram.png" alt="Instagram de {{ artist.name }}" width="30" height="30" /></a>
+          <a href="{{ artist.instagram }}"><img src="{% get_media_prefix %}commons/icons/instagram.png" alt="Instagram de {{ artist.name }}" width="30" height="30" /></a>
         </div>
       {% endif %}
       {% if artist.facebook %}
         <div class="col">
-          <a href="{{ artist.facebook }}"><img src="{% get_media_prefix %}icons/facebook.png" alt="Facebook de {{ artist.name }}" width="30" height="30" /></a>
+          <a href="{{ artist.facebook }}"><img src="{% get_media_prefix %}commons/icons/facebook.png" alt="Facebook de {{ artist.name }}" width="30" height="30" /></a>
         </div>
       {% endif %}
     </div>

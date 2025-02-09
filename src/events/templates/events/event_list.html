@@ -20,10 +20,21 @@
     <div class="row margin-bottom text-center">
       <h1>La liste des évènements</h1>
     </div>
-    <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
-      {% for event in events %}
-        {% include 'events/event_cards.html' %}
-      {% endfor %}
+    {% if events %}
+      <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
+        {% for event in events %}
+          {% include 'events/event_cards.html' %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="col">
+        <div class="row row-padding text-center">
+          <h2>Pas d'évènements pour le moment !</h2>
+        </div>
+      </div>
+    {% endif %}
+    <div class="row row-padding col-6 mx-auto">
+      <a class="btn btn-light" href="{% url 'events:create' %}" role="button">Ajouter un évènement</a>
     </div>
   </div>
 {% endblock %}

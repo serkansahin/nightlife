@@ -26,10 +26,14 @@
     <div class="row margin-bottom text-center">
       <div class="col">
         <h1>{{ user.username }}</h1>
-        {% if user.author %}
-          <h5>Organisateur</h5>
+        {% if user.is_admin %}
+          <h5>Administrateur</h5>
         {% else %}
-          <h5>Utilisateur</h5>
+          {% if user.author %}
+            <h5>Organisateur</h5>
+          {% else %}
+            <h5>Utilisateur</h5>
+          {% endif %}
         {% endif %}
         <p>{{ user.town }}</p>
       </div>

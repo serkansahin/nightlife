@@ -6,7 +6,7 @@
         {% if user.thumbnail %}
           <img src="{{ user.thumbnail.url }}" alt="{{ user.name }}" />
         {% else %}
-          <img src="{% get_media_prefix %}users/default.png" alt="{{ user.username }}" />
+          <img src="{% get_media_prefix %}commons/users/user.png" alt="{{ user.username }}" />
         {% endif %}
       </div>
     </div>

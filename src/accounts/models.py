@@ -61,7 +61,7 @@ class CustomUser(AbstractBaseUser):
     )
     username = models.CharField(max_length=15, unique=True, blank=False, verbose_name="Votre nom / pseudo")
     slug = models.SlugField(max_length=15, unique=True)
-    town = models.CharField(max_length=30, null=True, verbose_name="Ville")
+    town = models.CharField(max_length=30, null=True, blank=True, verbose_name="Ville")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
     short_biography = models.CharField(max_length=100, blank=True, verbose_name="Vous en quelques mots")
     biography = models.TextField(blank=True, verbose_name="Biographie")

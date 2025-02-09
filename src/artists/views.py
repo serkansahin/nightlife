@@ -60,7 +60,7 @@ def ArtistCreate(request):
                 new_artist.created_on = timezone.now()
                 if playlist_search:
                     new_artist.playlist = playlist_search["id"]
-
+                    
                 image_url = artist_search["images"][0]["url"]
                 image_response = requests.get(image_url)
                 if image_response.status_code == 200:
@@ -68,6 +68,17 @@ def ArtistCreate(request):
                     new_artist.thumbnail.save(f"{new_artist.name}.jpg", image_content)
 
                 new_artist.save()
+
+                for genre in artist_search["genres"]:
+                    tag = Tag.objects.filter(slug=slugify(genre)).first()
+                    if not tag:
+                        tag = Tag(
+                            name = genre,
+                            slug=slugify(genre)
+                        )
+                        tag.save()
+                    new_artist.tags.add(tag)
+
                 return redirect('artists:artist', new_artist.slug)
     else:
         form = ArtistCreateForm()
@@ -87,6 +98,7 @@ def ArtistCreateSpotifyFollowings(request):
         if followed_artists is None:
             return render(request, 'artists/error.html', {'message': 'Erreur lors de la récupération des artistes suivis.'})
         
+        artists = []
         for followed_artist in followed_artists:
             if not Artist.objects.filter(slug=slugify(followed_artist['name'])).exists():
                 playlist_search = spotify_search("playlist", followed_artist['name'])
@@ -97,14 +109,6 @@ def ArtistCreateSpotifyFollowings(request):
                     image_response = requests.get(image_url)
                     if image_response.status_code == 200:
                         image_content = ContentFile(image_response.content)
-
-                for genre in followed_artist["genres"]:
-                    if not Tag.objects.filter(slug=slugify(genre)).exists():
-                        tag = Tag(
-                            name = genre,
-                            slug=slugify(genre)
-                        )
-                        tag.save()
                 
                 artist = Artist(
                     name=followed_artist['name'],
@@ -112,13 +116,23 @@ def ArtistCreateSpotifyFollowings(request):
                     spotify=followed_artist['id'],
                     created_on=timezone.now(),
                     playlist=playlist,
-                    tags = followed_artist["genres"]
                 )
                 if image_content:
                     artist.thumbnail.save(f"{followed_artist['name']}.jpg", image_content)
                 artist.save()
-        
-        return HttpResponseRedirect(reverse('artists:list'))
+
+                for genre in followed_artist["genres"]:
+                    tag = Tag.objects.filter(slug=slugify(genre)).first()
+                    if not tag:
+                        tag = Tag(
+                            name = genre,
+                            slug=slugify(genre)
+                        )
+                        tag.save()
+                    artist.tags.add(tag)
+
+                artists.append(artist)
+        return render(request, "artists/artists_list_import_confirmed.html", {"artists": artists})
 
     
 @method_decorator(login_required, name="dispatch")
