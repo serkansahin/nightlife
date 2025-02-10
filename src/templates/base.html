@@ -1,21 +1,23 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-  {% block title %}{% endblock %}
-  {% load bootstrap5 %}
-  {% bootstrap_css %}
-  {% bootstrap_javascript %}
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <script src="{% static 'js/forms.js' %}"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-</head>
-<body>
+  <head>
+    {% block title %}
 
-  {% include "header.html" %}
-  
-  {% block content %}
-  {% endblock %}
+    {% endblock %}
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="{% static 'js/forms.js' %}"></script>
+    <script src="{% static 'js/search_bar.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  </head>
+  <body>
+    {% include 'header.html' %}
 
-</body>
+    {% block content %}
+
+    {% endblock %}
+  </body>
 </html>

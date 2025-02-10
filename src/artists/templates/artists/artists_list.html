@@ -22,11 +22,19 @@
       <h1>La liste des artistes</h1><p>(A-Z)</p>
     </div>
     {% if artists %}
+      <div class="row row-padding margin-bottom col-6 mx-auto">
+        <div class="search-container">
+          <input id="search_artist" type="text" class="form-control search-input" placeholder="Rechercher..." />
+          <i class="bi bi-search search-icon"></i>
+        </div>
+      </div>
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4">
         {% for artist in artists %}
           {% include 'artists/artist_cards.html' %}
         {% endfor %}
       </div>
+
+      <!--       Pagination des artistes
       <div class="row row-padding">
         <nav>
           <ul class="pagination justify-content-center">
@@ -75,7 +83,7 @@
             {% endif %}
           </ul>
         </nav>
-      </div>
+      </div>       -->
     {% else %}
       <div class="col">
         <div class="row row-padding text-center">
