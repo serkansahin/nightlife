@@ -149,6 +149,7 @@ class ArtistsList(ListView):
     model = Artist
     context_object_name = "artists"
     template_name = "artists/artists_list.html"
+    paginate_by = 24
 
     def get_queryset(self):
         queryset = super().get_queryset().order_by('name')

@@ -23,7 +23,7 @@
     <div class="row margin-bottom text-center">
       <h1>Mes artistes suivi(e)s</h1><p>(A-Z)</p>
     </div>
-    {% if user.fan %}
+    {% if user.fan.all %}
       <div class="row row-padding">
         {% for artist in user.fan.all %}
           {% include 'artists/artist_cards.html' %}
@@ -31,7 +31,7 @@
       </div>
     {% else %}
       <div class="col">
-        <div class="row row-padding">
+        <div class="row row-padding text-center">
           <h2>Pas d'artistes pour le moment !</h2>
         </div>
       </div>
