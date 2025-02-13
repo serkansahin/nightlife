@@ -29,7 +29,7 @@ class BlogPostList(ListView):
 class BlogPostCreate(CreateView):
     model = BlogPost
     template_name = "blog/blogpost_create.html"
-    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_featured']
+    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_featured', 'related_event', 'related_artists']
 
     def form_valid(self, form):
         if self.request.user.is_authenticated:
@@ -44,7 +44,7 @@ class BlogPostUpdate(UpdateView):
     model = BlogPost
     template_name = "blog/blogpost_edit.html"
     context_object_name = "post"
-    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_homepage_displayed']
+    fields = ['title', 'thumbnail', 'tags', 'summary', 'content', 'published', 'is_featured', 'related_event', 'related_artists']
 
 class BlogPostDetail(DetailView):
     model = BlogPost

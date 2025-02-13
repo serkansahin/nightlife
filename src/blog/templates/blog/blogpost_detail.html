@@ -71,6 +71,33 @@
       <p class="justify">{{ post.content|safe|linebreaksbr }}</p>
     </div>
   </div>
+  {% if post.related_event %}
+    <div class="container-fluid bg-light">
+      <div class="container container-section">
+        <div class="row row-padding">
+          <h1>Évènement lié</h1>
+        </div>
+        <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
+          {% include 'events/event_cards.html' with event=post.related_event %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  {% if post.related_artists %}
+    <div class="container-fluid">
+      <div class="container container-section">
+        <div class="row row-padding">
+          <h1>Artiste(s) lié(s)</h1>
+        </div>
+        <div class="row row-padding row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+          {% for artist in post.related_artists.all %}
+            {% include 'artists/artist_cards.html' %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
 
   <div class="container-fluid bg-light">
     <div class="container container-section">
@@ -82,7 +109,7 @@
                 {% if post.author.thumbnail %}
                   <img src="{{ post.author.thumbnail.url }}" alt="{{ post.author }}" />
                 {% else %}
-                  <img src="{% get_media_prefix %}users/default.png" alt="{{ post.author }}" />
+                  <img src="{% get_media_prefix %}commons/users/user.png" alt="{{ post.author }}" />
                 {% endif %}
               </div>
             </div>
@@ -94,7 +121,9 @@
               <a href="{% url 'accounts:details' slug=post.author|slugify %}"><h3>{{ post.author }}</h3></a>
             </div>
             <div class="row row-padding">
-              <p>"{{ post.author.short_biography }}"</p>
+              {% if post.author.short_biography %}
+                <p>"{{ post.author.short_biography }}"</p>
+              {% endif %}
             </div>
           </div>
         </div>

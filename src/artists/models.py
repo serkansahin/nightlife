@@ -28,8 +28,8 @@ class Artist(models.Model):
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
     tags = models.ManyToManyField("events.Tag", related_name='artist_tags')
 
-    class meta:
-        ordering = ["-created_on"]
+    class Meta:
+        ordering = ["name"]
         verbose_name = "Artiste"
 
     def __str__(self):

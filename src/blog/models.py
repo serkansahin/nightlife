@@ -6,7 +6,8 @@ from django.urls import reverse
 
 from datetime import date
 import readtime
-from events.models import Tag
+from artists.models import Artist
+from events.models import Event, Tag
 from nightlife.methods import PathAndRename
 
 # Create your models here.
@@ -23,6 +24,8 @@ class BlogPost(models.Model):
     content = models.TextField(blank=True, verbose_name="Contenu")
     thumbnail = models.ImageField(blank=True, upload_to=path_and_rename)
     tags = models.ManyToManyField(Tag, related_name='blogpost_tags')
+    related_event = models.ForeignKey(Event, on_delete=models.SET_NULL, related_name='related_event', null=True, blank=True,  verbose_name="Évènement lié")
+    related_artists = models.ManyToManyField(Artist, related_name='related_artists', blank=True, verbose_name="Artistes liés")
 
 
     class Meta:

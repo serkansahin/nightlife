@@ -23,7 +23,11 @@
         <div class="carousel-caption d-none d-md-block margin-bottom">
             <a href="{% url 'blog:post' slug=article.slug %}">
                 <h1>{{ article.title|upper }}</h1>
-                <p>{{ article.summary|truncatewords_html:20}}</p>
+                {% if article.summary %}
+                  <p>{{ article.summary|truncatewords_html:20}}</p>
+                {% else %}
+                  <p>{{ article.content|truncatewords_html:20}}</p>
+                {% endif %}
             </a>
         </div>
 

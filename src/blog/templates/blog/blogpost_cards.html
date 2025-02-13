@@ -15,7 +15,11 @@
       </div>
       <p class="card-text">{{ event.location }}</p>
       <p class="card-text">
-        <small class="text-body-secondary">{{ post.summary|truncatewords_html:20 }}</small>
+        {% if article.summary %}
+          <small class="text-body-secondary">{{ post.summary|truncatewords_html:20 }}</small>
+        {% else %}
+          <small class="text-body-secondary">{{ post.content|truncatewords_html:20 }}</small>
+        {% endif %}
       </p>
       {% if post.tags %}
         {% for tag in post.tags.all %}
