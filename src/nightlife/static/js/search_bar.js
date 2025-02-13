@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
           el.style.display = 'none';
         });
         //loop through outer ->card-title
-        document.querySelectorAll('.artist-card .name h4').forEach(function(el) {
+        document.querySelectorAll('.artist-card .name h5').forEach(function(el) {
           //compare 
           if (el.textContent.toLowerCase().indexOf(inputs) > -1) {
             el.closest('.artist-card').style.display = "block"; //if match show that div

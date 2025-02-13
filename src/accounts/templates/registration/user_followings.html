@@ -24,7 +24,13 @@
       <h1>Mes artistes suivi(e)s</h1><p>(A-Z)</p>
     </div>
     {% if user.fan.all %}
-      <div class="row row-padding">
+      <div class="row row-padding margin-bottom col-6 mx-auto">
+        <div class="search-container">
+          <input id="search_artist" type="text" class="form-control search-input" placeholder="Rechercher..." />
+          <i class="bi bi-search search-icon"></i>
+        </div>
+      </div>
+      <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
         {% for artist in user.fan.all %}
           {% include 'artists/artist_cards.html' %}
         {% endfor %}
@@ -36,5 +42,11 @@
         </div>
       </div>
     {% endif %}
+    <div class="row row-padding col-6 mx-auto">
+      <a class="btn btn-light" href="{% url 'artists:list' %}" role="button">Aller à la page des artistes</a>
+    </div>
+    <div class="row row-padding col-6 mx-auto">
+      <a class="btn btn-light" href="{% url 'artists:follow_spotify_followings' %}" role="button">Suivre ses artistes de Spotify</a>
+    </div>
   </div>
 {% endblock %}

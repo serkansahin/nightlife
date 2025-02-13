@@ -133,6 +133,28 @@ def ArtistCreateSpotifyFollowings(request):
 
                 artists.append(artist)
         return render(request, "artists/artists_list_import_confirmed.html", {"artists": artists})
+    
+
+@login_required
+def ArtistFollowSpotifyFollowings(request):
+    if not is_user_connected():
+        print("L'utilisateur n'est pas connecté. Redirection vers l'URL d'autorisation.")
+        global REFERER
+        REFERER = request.META.get("HTTP_REFERER")
+        return redirect(get_authorization_url())
+    else:
+        print("L'utilisateur est déjà connecté.")
+        followed_artists = user_get_followed_artists()
+        if followed_artists is None:
+            return render(request, 'artists/error.html', {'message': 'Erreur lors de la récupération des artistes suivis.'})
+        
+        for followed_artist in followed_artists:
+            if Artist.objects.filter(slug=slugify(followed_artist['name'])).exists():
+                artist = get_object_or_404(Artist, slug=slugify(followed_artist['name']))
+                if not artist.followers.filter(id=request.user.id).exists():
+                    artist.followers.add(request.user)
+                
+        return render(request, "registration/user_followings.html")
 
     
 @method_decorator(login_required, name="dispatch")
