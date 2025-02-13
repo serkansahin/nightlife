@@ -48,7 +48,15 @@
             {% endfor %}
           </div>
         {% endif %}
-        {% if not events and not artists %}
+        {% if blogposts %}
+          <h2 class="text-center">Articles:</h2>
+          <div class="row row-padding row-cols-1 row-cols-sm-2 row-cols-md-4">
+            {% for post in blogposts %}
+              {% include 'blog/blogpost_cards.html' %}
+            {% endfor %}
+          </div>
+        {% endif %}
+        {% if not events and not artists and not blogposts %}
           <h2 class="text-center">Désolé, aucun résultat trouvé !</h2>
           <div class="row row-padding col-6 mx-auto">
             <a class="btn btn-light" href="{% url 'home' %}" role="button">Retour à la page d'accueil</a>

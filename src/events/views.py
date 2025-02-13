@@ -95,6 +95,7 @@ def Search(request):
         search_query = request.POST['search_query']
         events = Event.objects.filter(title__unaccent__icontains=search_query)
         artists = Artist.objects.filter(name__unaccent__icontains=search_query)
-        return render(request, "events/search_results.html", {'search_query': search_query, 'events': events, 'artists': artists})
+        blogposts = BlogPost.objects.filter(title__unaccent__icontains=search_query)
+        return render(request, "events/search_results.html", {'search_query': search_query, 'events': events, 'artists': artists, 'blogposts': blogposts})
     else:
         return render(request, "events/search_results.html")
