@@ -4,6 +4,7 @@ from django.db.models.query import QuerySet
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.template.defaultfilters import slugify
+from django.views.generic.edit import ModelFormMixin
 from django.db.models import Count
 
 # Create your views here.
@@ -14,6 +15,7 @@ from django.utils.decorators import method_decorator
 
 from accounts.models import CustomUser
 from artists.models import Artist
+from events.forms import CommentForm
 from events.models import Event
 from blog.models import BlogPost
 
@@ -88,6 +90,22 @@ def EventInterestedView(request, slug):
         event.interested.add(request.user)
 
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+@login_required
+def EventCommentView(request, slug):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        event = get_object_or_404(Event, slug=slug)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.event = event
+            new_comment.comment = form.cleaned_data.get('comment')
+            form.save()
+            event.comments.add(new_comment)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        form = CommentForm()
 
 
 def Search(request):

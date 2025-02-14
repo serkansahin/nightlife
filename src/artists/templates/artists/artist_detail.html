@@ -108,4 +108,32 @@
       {% endif %}
     </div>
   </div>
+
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les commentaires</h1>
+        <div class="row">
+          <form action="{% url 'artists:comment' slug=artist.slug %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-light">Envoyer</button>
+          </form>
+        </div>
+        {% if artist.comments %}
+          {% for comment in artist.comments.all %}
+            <div class="row">
+              <div class="col">
+                <p>{{ comment.comment|linebreaks }}</p>
+                <p>Par {{ comment.user.username }}</p>
+                <p>Le {{ comment.created_on }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

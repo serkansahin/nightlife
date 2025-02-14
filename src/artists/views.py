@@ -15,6 +15,7 @@ import requests
 
 from artists.forms import ArtistCreateForm
 from artists.models import Artist
+from events.forms import CommentForm
 from events.models import Event, Tag
 from nightlife.spotify_methods import get_tokens, spotify_search, get_authorization_url, is_user_connected, user_get_followed_artists
     
@@ -189,6 +190,21 @@ class ArtistDetail(DetailView):
     template_name = "artists/artist_detail.html"
     context_object_name = "artist"
 
+@login_required
+def ArtistCommentView(request, slug):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        artist = get_object_or_404(Artist, slug=slug)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.artist = artist
+            new_comment.comment = form.cleaned_data.get('comment')
+            form.save()
+            artist.comments.add(new_comment)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        form = CommentForm()
 
 @method_decorator(login_required, name="dispatch")
 class ArtistDelete(DeleteView):

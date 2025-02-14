@@ -130,4 +130,32 @@
       </div>
     </div>
   </div>
+
+  <div class="container-fluid bg-light">
+    <div class="container container-section">
+      <div class="row">
+        <h1>Les commentaires</h1>
+        <div class="row">
+          <form action="{% url 'blog:comment' slug=post.slug %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-light">Envoyer</button>
+          </form>
+        </div>
+        {% if post.comments %}
+          {% for comment in post.comments.all %}
+            <div class="row">
+              <div class="col">
+                <p>{{ comment.comment|linebreaks }}</p>
+                <p>Par {{ comment.user.username }}</p>
+                <p>Le {{ comment.created_on }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -44,9 +44,9 @@
       <form action="{% url 'events:interested' slug=event.slug %}" method="POST">
         {% csrf_token %}
         {% if request.user not in event.interested.all %}
-          <button type="submit" value="{{ event.slug }}" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Sauvegarder l'évènement</button>
+          <button type="submit" class="btn btn-light"><i class="bi bi-bookmark-heart"></i> Sauvegarder l'évènement</button>
         {% else %}
-          <button type="submit" value="{{ event.slug }}" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Evenement sauvegardé !</button>
+          <button type="submit" class="btn btn-success"><i class="bi bi-bookmark-heart-fill"></i> Evenement sauvegardé !</button>
         {% endif %}
 
         {% if event.interested.count > 0 %}
@@ -90,22 +90,45 @@
       <h3>Description</h3>
       <p>{{ event.content|safe|linebreaks }}</p>
     </div>
+    <div class="row">
+      <h1>La lineup</h1>
+      {% if event.artists %}
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+          {% for artist in event.artists.all %}
+            {% include 'artists/artist_cards.html' %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="col">
+          <h5>Pas encore d'artistes annoncé(e)s !</h5>
+        </div>
+      {% endif %}
+    </div>
   </div>
 
   <div class="container-fluid bg-light">
     <div class="container container-section">
       <div class="row">
-        <h1>La lineup</h1>
-        {% if event.artists %}
-          <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-            {% for artist in event.artists.all %}
-              {% include 'artists/artist_cards.html' %}
-            {% endfor %}
-          </div>
-        {% else %}
-          <div class="col">
-            <h5>Pas encore d'artistes annoncé(e)s !</h5>
-          </div>
+        <h1>Les commentaires</h1>
+        <div class="row">
+          <form action="{% url 'events:comment' slug=event.slug %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea class="form-control" name="comment" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-light">Envoyer</button>
+          </form>
+        </div>
+        {% if event.comments %}
+          {% for comment in event.comments.all %}
+            <div class="row">
+              <div class="col">
+                <p>{{ comment.comment|linebreaks }}</p>
+                <p>Par {{ comment.user.username }}</p>
+                <p>Le {{ comment.created_on }}</p>
+              </div>
+            </div>
+          {% endfor %}
         {% endif %}
       </div>
     </div>

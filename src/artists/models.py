@@ -27,6 +27,7 @@ class Artist(models.Model):
     playlist = models.CharField(max_length=255, blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
     tags = models.ManyToManyField("events.Tag", related_name='artist_tags')
+    comments = models.ManyToManyField("events.Comment", related_name='artist_comments', blank=True)
 
     class Meta:
         ordering = ["name"]

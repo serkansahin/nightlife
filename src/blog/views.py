@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 from blog.models import BlogPost
+from events.forms import CommentForm
 
 
 class BlogPostList(ListView):
@@ -50,6 +51,22 @@ class BlogPostDetail(DetailView):
     model = BlogPost
     template_name = "blog/blogpost_detail.html"
     context_object_name = "post"
+
+@login_required
+def BlogPostCommentView(request, slug):
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        post = get_object_or_404(BlogPost, slug=slug)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.post = post
+            new_comment.comment = form.cleaned_data.get('comment')
+            form.save()
+            post.comments.add(new_comment)
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    else:
+        form = CommentForm()
 
 @method_decorator(login_required, name="dispatch")
 class BlogPostDelete(DeleteView):

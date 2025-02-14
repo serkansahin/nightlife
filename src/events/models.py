@@ -25,6 +25,18 @@ class Tag(models.Model):
  
         return super().save(*args, **kwargs)
     
+class Comment(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments")
+    comment = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_on"]
+        verbose_name = "Commentaire"
+
+    def __str__(self):
+        return self.comment
+    
 class Event(models.Model):
     path_and_rename = PathAndRename("events/")
 
@@ -46,8 +58,9 @@ class Event(models.Model):
     artists = models.ManyToManyField(Artist, related_name="events")
     interested = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="interested")
     tags = models.ManyToManyField(Tag, related_name='event_tags', blank=True)
+    comments = models.ManyToManyField(Comment, related_name='event_comment', blank=True)
 
-    class meta:
+    class Meta:
         ordering = ["-created_on"]
         verbose_name = "Event"
 
