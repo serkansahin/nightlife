@@ -1,6 +1,6 @@
 {% load static %}
 <div class="row row-padding align-items-center">
-  <div class="col-3">
+  <div class="col-2">
     <a href="{% url 'accounts:details' slug=comment.user|slugify %}">
       <div class="row container-circle">
         <div class="circle">
@@ -13,7 +13,7 @@
       </div>
     </a>
   </div>
-  <div class="col-9">
+  <div class="col">
     <div class="row row-padding name">
       <a href="{% url 'accounts:details' slug=comment.user|slugify %}"><h5>{{ comment.user }}</h5></a>
       <p class="text-time">Le {{ comment.created_on }}</p>
