@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/LeMayhem/nightlife.svg?branch=deploy)](https://travis-ci.org/LeMayhem/nightlife)
 
-#Nightlife
+# Nightlife
 
 ## Welcome to Nightlife
 
