@@ -10,6 +10,14 @@ You can find all the popular events and artists, follow them to stay tuned and m
 This project aims to use Django framework and Spotify API. This is a WIP, you can follow the building of new features on this repo.
 
 ## Features
+
+### Homepage
+You have access to:
+- The 4 most populars events from current week (based on "ongoing" button)
+- 4 most popular artists (based on "following" button)
+- Latest events created
+- The top 4 promoters
+
 ### Events
 Here you can discover and follow events. Promoters can sign up to create their own events to reach new people.
 Promoters can ask to feature their events.
@@ -26,11 +34,16 @@ Members can discuss on every artists fan pages to meet other fans.
 Members can inform themselves with the blog part. Admin can create posts to feature events or artists, to be desplayed on home page.
 Members can also discuss on every blog posts.
 
+### Search
+- You can search globally from the header's searchbar, which will search on Artists, events and blogposts
+- You can filter by using searchbars on Artists, events and blogposts list pages
 
 ## WIP:
 - Build more interactions between Spotify API and Nightlife (Playlists, etc)
 - Add Facebook login
 - Add Soundcloud API
+- More filters on list pages
+- Footer
 - Add screenshots of the project here ;-)
 
 # Installation
