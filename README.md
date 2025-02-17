@@ -29,6 +29,8 @@ Members can also discuss on every blog posts.
 
 ## WIP:
 - Build more interactions between Spotify API and Nightlife (Playlists, etc)
+- Add Facebook login
+- Add Soundcloud API
 - Add screenshots of the project here ;-)
 
 # Installation
