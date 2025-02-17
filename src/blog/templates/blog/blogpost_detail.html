@@ -70,6 +70,29 @@
       {% endif %}
       <p class="justify">{{ post.content|safe|linebreaksbr }}</p>
     </div>
+    <div class="row row-padding align-items-center">
+      <div class="col-9">
+        <div class="row row-padding name float-end">
+          <a href="{% url 'accounts:details' slug=post.author|slugify %}"><h3>{{ post.author }}</h3></a>
+        </div>
+        <div class="row row-padding float-end">
+          <p class="fst-italic">"{{ post.author.biography }}"</p>
+        </div>
+      </div>
+      <div class="col-3">
+        <a href="{% url 'accounts:details' slug=post.author|slugify %}">
+          <div class="row container-circle">
+            <div class="circle">
+              {% if post.author.thumbnail %}
+                <img src="{{ post.author.thumbnail.url }}" alt="{{ post.author }}" />
+              {% else %}
+                <img src="{% get_media_prefix %}commons/users/user.png" alt="{{ post.author }}" />
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
   </div>
   {% if post.related_event %}
     <div class="container-fluid bg-light">
@@ -98,61 +121,23 @@
       </div>
     </div>
   {% endif %}
-
-  <div class="container-fluid bg-light">
-    <div class="container container-section">
-      <div class="row row-padding">
-        <div class="col-3">
-          <a href="{% url 'accounts:details' slug=post.author|slugify %}">
-            <div class="row container-circle">
-              <div class="circle">
-                {% if post.author.thumbnail %}
-                  <img src="{{ post.author.thumbnail.url }}" alt="{{ post.author }}" />
-                {% else %}
-                  <img src="{% get_media_prefix %}commons/users/user.png" alt="{{ post.author }}" />
-                {% endif %}
-              </div>
-            </div>
-          </a>
-        </div>
-        <div class="col d-flex align-items-center">
-          <div>
-            <div class="row row-padding name">
-              <a href="{% url 'accounts:details' slug=post.author|slugify %}"><h3>{{ post.author }}</h3></a>
-            </div>
-            <div class="row row-padding">
-              {% if post.author.short_biography %}
-                <p>"{{ post.author.short_biography }}"</p>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <div class="container-fluid bg-light">
     <div class="container container-section">
       <div class="row">
         <h1>Les commentaires</h1>
-        <div class="row">
+        <div class="row row-padding">
           <form action="{% url 'blog:comment' slug=post.slug %}" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-              <textarea class="form-control" name="comment" rows="3"></textarea>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Laisser un commentaire" id="floatingTextarea2" style="height: 100px" name="comment"></textarea>
+              <label for="floatingTextarea2">Laisser un commentaire</label>
             </div>
             <button type="submit" class="btn btn-light">Envoyer</button>
           </form>
         </div>
         {% if post.comments %}
           {% for comment in post.comments.all %}
-            <div class="row">
-              <div class="col">
-                <p>{{ comment.comment|linebreaks }}</p>
-                <p>Par {{ comment.user.username }}</p>
-                <p>Le {{ comment.created_on }}</p>
-              </div>
-            </div>
+            {% include 'comments.html' %}
           {% endfor %}
         {% endif %}
       </div>

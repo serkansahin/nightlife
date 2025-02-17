@@ -113,24 +113,19 @@
     <div class="container container-section">
       <div class="row">
         <h1>Les commentaires</h1>
-        <div class="row">
+        <div class="row row-padding">
           <form action="{% url 'artists:comment' slug=artist.slug %}" method="POST">
             {% csrf_token %}
-            <div class="form-group">
-              <textarea class="form-control" name="comment" rows="3"></textarea>
+            <div class="form-floating">
+              <textarea class="form-control" placeholder="Laisser un commentaire" id="floatingTextarea2" style="height: 100px" name="comment"></textarea>
+              <label for="floatingTextarea2">Laisser un commentaire</label>
             </div>
             <button type="submit" class="btn btn-light">Envoyer</button>
           </form>
         </div>
         {% if artist.comments %}
           {% for comment in artist.comments.all %}
-            <div class="row">
-              <div class="col">
-                <p>{{ comment.comment|linebreaks }}</p>
-                <p>Par {{ comment.user.username }}</p>
-                <p>Le {{ comment.created_on }}</p>
-              </div>
-            </div>
+            {% include 'comments.html' %}
           {% endfor %}
         {% endif %}
       </div>
