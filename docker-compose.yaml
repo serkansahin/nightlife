@@ -1,0 +1,31 @@
+services:
+  postgres:
+    image: postgres:17.3-bullseye
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=nightlife
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nightlife"]
+      interval: 10s
+      timeout: 60s
+      retries: 5
+      start_period: 5s
+
+  nightlife:
+    build: .
+    command: >
+      bash -c "
+        python3 ./src/manage.py makemigrations;
+        python3 ./src/manage.py migrate;
+        # python3 ./src/manage.py createsuperuser;
+        # python3 ./src/manage.py runserver
+      "
+    volumes:
+      - ./src:/home/nightlife-system/src:rw
+    ports:
+      - 8000:8000
+    depends_on:
+      postgres:
+        condition: service_healthy

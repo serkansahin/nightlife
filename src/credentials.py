@@ -1,0 +1,9 @@
+DB_NAME="nightlife"
+DB_USER="nightlife" 
+DB_PASSWORD="password" 
+DB_HOST="postgres"
+DB_PORT=5432 
+DJANGO_SECRET_KEY="foobar"
+CLIENT_ID="eeeeeeee"
+CLIENT_SECRET="ffffffff"
+REDIRECT_URI="http://0.0.0.0:8000"
