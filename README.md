@@ -21,8 +21,8 @@ This project aims to use Django framework and Spotify API. This is a WIP, you ca
 2. Create a virtual environment and activate it:
 
     ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
+    python -m venv .env
+    source .env/bin/activate  # On Windows, use `venv\Scripts\activate`
     ```
 
 3. Install the dependencies:
@@ -57,7 +57,7 @@ This project aims to use Django framework and Spotify API. This is a WIP, you ca
 
 ### Homepage
 
-![screenshot](./src/mediafiles/readme/localhost_8000.png)
+<img src="./src/mediafiles/readme/localhost_8000.png" width=30%>
 
 You have access to:
 - The 4 most populars events from current week (based on "ongoing" button)
@@ -67,7 +67,7 @@ You have access to:
 
 ### Events
 
-![screenshot](./src/mediafiles/readme/localhost_8000_events_the-magician-album-tour.png)
+<img src="./src/mediafiles/readme/localhost_8000_events_the-magician-album-tour.png" width=30%>
 
 Here you can discover and follow events. Promoters can sign up to create their own events to reach new people.
 Promoters can ask to feature their events.
@@ -75,8 +75,8 @@ Members can discuss on every events to find friends to hangout with.
 
 ### Artists
 
-![screenshot](./src/mediafiles/readme/localhost_8000_artists.png)
-![screenshot](./src/mediafiles/readme/localhost_8000_artists_amelie-lens.png)
+<img src="./src/mediafiles/readme/localhost_8000_artists.png" width=30%>
+<img src="./src/mediafiles/readme/localhost_8000_artists_amelie-lens.png" width=30%>
 
 You can check all the events your favorites artists are playing. You can follow them in order to keep you in touch.
 With Spotify API, you can do some actions:
@@ -86,15 +86,15 @@ Members can discuss on every artists fan pages to meet other fans.
 
 ### Blog
 
-![screenshot](./src/mediafiles/readme/localhost_8000_blog.png)
-![screenshot](./src/mediafiles/readme/localhost_8000_blog_the-magician.png)
+<img src="./src/mediafiles/readme/localhost_8000_blog.png" width=30%>
+<img src="./src/mediafiles/readme/localhost_8000_blog_the-magician.png" width=30%>
 
 Members can inform themselves with the blog part. Admin can create posts to feature events or artists, to be desplayed on home page.
 Members can also discuss on every blog posts.
 
 ### Search
 
-![screenshot](./src/mediafiles/readme/localhost_8000_search.png)
+<img src="./src/mediafiles/readme/localhost_8000_search.png" width=30%>
 
 - You can search globally from the header's searchbar, which will search on Artists, events and blogposts
 - You can filter by using searchbars on Artists, events and blogposts list pages
