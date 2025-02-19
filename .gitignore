@@ -1,8 +1,14 @@
 .DS_Store
-/.env
-src/nightlife/settings.py
-nightlife/__pycache__
-src/nightlife/__pycache__
-src/nightlife/migrations
+/.env/
+migrations/
 src/staticfiles
-src/mediafiles
+src/mediafiles/artists
+src/mediafiles/users
+src/mediafiles/events
+src/mediafiles/blog
+credentials.py
+
+# Python temp files
+__pycache__/
+*.py[cod]
+*$py.class
