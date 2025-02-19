@@ -14,7 +14,7 @@ This project aims to use Django framework and Spotify API. This is a WIP, you ca
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/nightlife.git
+    git clone https://github.com/lemayhem/nightlife.git
     cd nightlife
     ```
 
@@ -22,7 +22,7 @@ This project aims to use Django framework and Spotify API. This is a WIP, you ca
 
     ```bash
     python -m venv .env
-    source .env/bin/activate  # On Windows, use `venv\Scripts\activate`
+    source .env/bin/activate
     ```
 
 3. Install the dependencies:
