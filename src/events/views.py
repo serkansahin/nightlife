@@ -40,12 +40,10 @@ class EventsList(ListView):
     template_name = "events/event_list.html"
 
     def get_queryset(self):
-        queryset = super().get_queryset().order_by('starts')
+        queryset = {'current_events': Event.objects.filter(starts__date__gte=datetime.datetime.now(), published=True).order_by('starts'),
+                    'past_events': Event.objects.filter(starts__date__lt=datetime.datetime.now(), published=True).order_by('-starts')}
 
-        #Si user connecté, on retourne l'ensemble du queryset, sinon on n'affiche que les events publiés
-        if self.request.user.is_authenticated:
-            return queryset
-        return queryset.filter(published=True)
+        return queryset
     
 @method_decorator(login_required, name="dispatch")
 class EventCreate(CreateView):
