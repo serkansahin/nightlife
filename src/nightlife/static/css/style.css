@@ -11,6 +11,10 @@ body {
     display: none;
 }
 
+#btn-back-to-top.hover {
+    background-color: black !important;
+}
+
 .row-padding {
     padding: 10px 0;
 }

@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'events',
     'artists',
     'blog',
+    'tags',
+    'comments',
     'django_cleanup.apps.CleanupConfig', # should go at the end
 ]
 

@@ -32,6 +32,8 @@ urlpatterns = [
     path('events/', include('events.urls')),
     path('artists/', include('artists.urls')),
     path('blog/', include('blog.urls')),
+    path('comments/', include('comments.urls')),
+    #path('tags/', include('tags.urls')),
     path('search/', views.Search, name='search'),
     path('callback/', spotify_callback, name='spotify_callback'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

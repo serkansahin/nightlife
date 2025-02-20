@@ -6,37 +6,11 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 from artists.models import Artist
+from comments.models import Comment
 from nightlife.methods import PathAndRename
+from tags.models import Tag
 
 # Create your models here.
-class Tag(models.Model):
-    name = models.CharField(max_length=255, unique=True, verbose_name="tag")
-    slug = models.SlugField(max_length=255, unique=True)
-
-    class Meta:
-        ordering = ["name"]
-    
-    def __str__(self):
-        return self.name
-    
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
- 
-        return super().save(*args, **kwargs)
-    
-class Comment(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="comments")
-    comment = models.TextField()
-    created_on = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        ordering = ["-created_on"]
-        verbose_name = "Commentaire"
-
-    def __str__(self):
-        return self.comment
-    
 class Event(models.Model):
     path_and_rename = PathAndRename("events/")
 

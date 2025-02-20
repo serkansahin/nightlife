@@ -6,7 +6,9 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 from django.utils.translation import gettext_lazy as _
 
+from comments.models import Comment
 from nightlife.methods import PathAndRename
+from tags.models import Tag
 
 # Create your models here.
 class Artist(models.Model):
@@ -26,8 +28,8 @@ class Artist(models.Model):
     facebook = models.URLField(max_length=255, blank=True)
     playlist = models.CharField(max_length=255, blank=True)
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="fan")
-    tags = models.ManyToManyField("events.Tag", related_name='artist_tags')
-    comments = models.ManyToManyField("events.Comment", related_name='artist_comments', blank=True)
+    tags = models.ManyToManyField(Tag, related_name='artist_tags')
+    comments = models.ManyToManyField(Comment, related_name='artist_comments', blank=True)
 
     class Meta:
         ordering = ["name"]
