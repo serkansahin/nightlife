@@ -4,6 +4,13 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+#btn-back-to-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    display: none;
+}
+
 .row-padding {
     padding: 10px 0;
 }
